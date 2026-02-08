@@ -1,7 +1,7 @@
 {
-  "name": "kushmanmb.org",
+  "name": "kushmanmb-org",
   "version": "1.0.0",
-  "description": "kushmanmb.org - A multi-component project featuring a slot machine game (Fleeing 5-0), USDC faucet server, and Ethereum contract verification tools",
+  "description": "Multi-component toolkit featuring Fleeing 5-0 slot machine game, USDC faucet server, and Ethereum contract verification tools",
   "scripts": {
     "build": "node build.js",
     "test": "node test.js",
