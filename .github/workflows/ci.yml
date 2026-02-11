@@ -44,10 +44,12 @@ jobs:
     - name: Run verification tests
       run: npm run test:verify
       continue-on-error: true
+      # Verification tests may fail in CI without proper environment setup (API keys, etc.)
 
     - name: Run faucet tests
       run: npm run test:faucet
       continue-on-error: true
+      # Faucet tests may fail in CI without proper environment setup (private keys, RPC, etc.)
 
   build:
     name: Build Project
@@ -121,7 +123,15 @@ jobs:
         # Check for potential secrets or sensitive data patterns
         echo "Checking for potential secrets..."
         # Look for assignment patterns with quoted strings that might be secrets
-        if grep -r -n -E "(private[_-]?key|api[_-]?key|secret[_-]?key|password)\s*[:=]\s*['\"][^'\"]{8,}" --include="*.js" --include="*.ts" --exclude-dir=node_modules --exclude=package-lock.json .; then
+        # Excludes test and example directories where placeholder secrets are expected
+        if grep -r -n -E "(private[_-]?key|api[_-]?key|secret[_-]?key|password)\s*[:=]\s*['\"][^'\"]{8,}" \
+          --include="*.js" --include="*.ts" \
+          --exclude-dir=node_modules \
+          --exclude-dir=test \
+          --exclude-dir=tests \
+          --exclude-dir=__tests__ \
+          --exclude-dir=examples \
+          --exclude=package-lock.json .; then
           echo "⚠️  Warning: Potential secrets found in code"
           echo "Please review the matches above and ensure no actual secrets are committed"
           echo "Note: Consider using a dedicated tool like Gitleaks for comprehensive scanning"

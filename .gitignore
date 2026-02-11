@@ -155,9 +155,11 @@ alchemy.config.js
 infura.config.js
 api-keys.json
 credentials.json
-*credentials*
-*api-key*
-*apikey*
+*.credentials.json
+*-credentials.json
+*-api-key.txt
+*-api-keys.json
+*-apikey.txt
 *.credentials
 .alchemy
 .infura
