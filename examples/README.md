@@ -100,6 +100,7 @@ If verification fails, check:
 ## Additional Resources
 
 - [Etherscan API Documentation](https://docs.etherscan.io/api-endpoints/contracts)
+- [Arbitrum Documentation](https://docs.arbitrum.io)
 - [Solidity ABI Specification](https://docs.soliditylang.org/en/latest/abi-spec.html)
 - [Foundry Verification Guide](https://book.getfoundry.sh/forge/deploying)
 - [Foundry Source Repository (foundry-rs/foundry)](https://github.com/foundry-rs/foundry)
