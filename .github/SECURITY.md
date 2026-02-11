@@ -97,7 +97,7 @@ When working with smart contracts:
 
 1. **Test thoroughly** - Always test on testnet before mainnet
 2. **Verify contracts** - Use the verification tool to make contracts auditable
-3. **Use testnets** - Use Sepolia, Goerli, or other testnets for development
+3. **Use testnets** - Use Sepolia or Holesky for Ethereum development, or appropriate testnets for other chains
 4. **Protect private keys** - Never commit private keys; use hardware wallets for production
 5. **Audit code** - Have contracts audited before deploying to mainnet
 

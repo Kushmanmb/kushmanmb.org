@@ -93,7 +93,7 @@ jobs:
       uses: actions/upload-artifact@v4
       if: matrix.node-version == '20.x'
       with:
-        name: dist-files-node-${{ matrix.node-version }}
+        name: dist-files
         path: dist/
         retention-days: 7
         if-no-files-found: error
@@ -120,9 +120,11 @@ jobs:
       run: |
         # Check for potential secrets or sensitive data patterns
         echo "Checking for potential secrets..."
-        if grep -r -E "(private[_-]?key|api[_-]?key|secret[_-]?key|password)" --include="*.js" --include="*.json" --exclude-dir=node_modules --exclude=package-lock.json --exclude=".gitignore" .; then
-          echo "Warning: Potential sensitive data patterns found"
+        # Look for assignment patterns with quoted strings that might be secrets
+        if grep -r -n -E "(private[_-]?key|api[_-]?key|secret[_-]?key|password)\s*[:=]\s*['\"][^'\"]{8,}" --include="*.js" --include="*.ts" --exclude-dir=node_modules --exclude=package-lock.json .; then
+          echo "⚠️  Warning: Potential secrets found in code"
           echo "Please review the matches above and ensure no actual secrets are committed"
+          echo "Note: Consider using a dedicated tool like Gitleaks for comprehensive scanning"
         else
-          echo "No obvious secret patterns found"
+          echo "✓ No obvious secret patterns found"
         fi
