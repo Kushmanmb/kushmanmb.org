@@ -23,8 +23,15 @@ lerna-debug.log*
 .env.development.local
 .env.test.local
 .env.production.local
+.env.staging
+.env.prod
 secrets.*
 .secrets
+secret.*
+*.secret
+config.local.js
+config.local.json
+local-config.*
 
 # Private keys and certificates
 *.key
@@ -148,3 +155,23 @@ alchemy.config.js
 infura.config.js
 api-keys.json
 credentials.json
+*credentials*
+*api-key*
+*apikey*
+*.credentials
+.alchemy
+.infura
+rpc-urls.json
+provider-config.json
+
+# Blockchain and Web3 sensitive data
+*private-key*
+*privatekey*
+*private_key*
+*.priv
+recovery-phrase.txt
+*recovery*.txt
+*passphrase*
+.password
+passwords.txt
+*password*.txt

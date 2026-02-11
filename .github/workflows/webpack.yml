@@ -1,28 +1,52 @@
-name: NodeJS with Webpack
+name: Webpack Build
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:
+
+# Security: Restrict permissions to minimum required
+permissions:
+  contents: read
 
 jobs:
   build:
+    name: Webpack Bundle
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
+      fail-fast: false
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Setup Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
+        cache: 'npm'
 
-    - name: Build
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build with Webpack
+      run: npm run webpack
+
+    - name: Verify webpack output
       run: |
-        npm install
-        npx webpack
+        if [ -d "dist" ]; then
+          echo "✓ Webpack build successful"
+          echo "Build artifacts:"
+          ls -lh dist/
+        else
+          echo "✗ Webpack build failed - no dist directory"
+          exit 1
+        fi
