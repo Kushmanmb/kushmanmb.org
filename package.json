@@ -1,8 +1,7 @@
 {
-  "name": "fleeing-5-0",
+  "name": "kushmanmb-org",
   "version": "1.0.0",
-  "description": "A slot machine game with performance optimizations",
-  "main": "dist/main.js",
+  "description": "Toolkit with multiplying capabilities, USDC faucet server, and Ethereum contract verification tools",
   "scripts": {
     "build": "node build.js",
     "test": "node test.js",
@@ -12,9 +11,10 @@
     "faucet": "node faucet.js",
     "verify": "node verify-contract.js"
   },
+  "keywords": ["game", "slot-machine", "ethereum", "faucet", "contract-verification", "usdc", "testnet"],
   "keywords": [
     "game",
-    "slot-machine"
+    ""
   ],
   "author": "kushmanmb",
   "license": "UNLICENSED",
@@ -24,7 +24,7 @@
     "express": "^4.18.2"
   },
   "devDependencies": {
-    "webpack": "^5.89.0",
+    "webpack": "^5.105.0",
     "webpack-cli": "^5.1.4"
   }
 }
