@@ -245,8 +245,8 @@ out/
 .nuxt/
 
 # Gatsby files (if used in future)
-.cache/
-public/
+# Note: .cache/ already covered by general cache patterns above
+/public/
 
 # VS Code history
 .history/
