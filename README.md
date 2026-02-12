@@ -124,7 +124,7 @@ npm run verify -- \
 
 - Ethereum: `mainnet`, `sepolia`, `holesky`
 - Polygon: `polygon`, `amoy`
-- Arbitrum: `arbitrum`
+- Arbitrum: `arbitrum` - [Arbitrum Documentation](https://docs.arbitrum.io)
 - Optimism: `optimism`
 - BSC: `bsc`, `bscTestnet`
 
