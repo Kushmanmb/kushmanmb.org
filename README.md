@@ -4,11 +4,33 @@ A slot machine game with performance optimizations and Ethereum testnet integrat
 
 > **Note**: For ownership and attribution information, see [OWNERSHIP.md](OWNERSHIP.md)
 
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Building the Project](#building-the-project)
+  - [Running the Game](#running-the-game)
+  - [Running Tests](#running-tests)
+- [Contract Verification](#contract-verification)
+- [USDC Faucet Server](#usdc-faucet-server)
+- [Performance Improvements](#performance-improvements)
+- [Project Structure](#project-structure)
+- [Development](#development)
+- [CI/CD Workflows](#cicd-workflows)
+- [Ownership](#ownership)
+- [Security](#security)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Documentation
 
 - 📋 [Coding Guidelines](CODING_GUIDELINES.md) - Comprehensive coding standards and best practices
 - 🏗️ [Development Infrastructure](.github/DEVELOPMENT_INFRASTRUCTURE.md) - CI/CD, templates, and tooling guide
 - 📝 [Configuration Templates](.github/) - Templates for roles, communication, and guidelines
+- 📁 [Files and Structure](FILES.md) - Comprehensive file and directory reference
+- 🔒 [Security Policy](.github/SECURITY.md) - Security best practices and reporting
 
 ## Getting Started
 
@@ -275,6 +297,53 @@ This repository uses GitHub Actions for continuous integration:
 For information about project ownership, component attribution, and licensing, please see [OWNERSHIP.md](OWNERSHIP.md).
 
 Code ownership is managed through the [CODEOWNERS](CODEOWNERS) file.
+
+## Security
+
+Security is a top priority for this project. Please review our comprehensive security documentation:
+
+- 🔒 [Security Policy](.github/SECURITY.md) - Security best practices, reporting guidelines, and incident response
+- 🛡️ [Security Checklist](.github/SECURITY.md#security-checklist) - Pre-commit security verification
+- 🚨 [Incident Response](.github/SECURITY.md#incident-response) - What to do if you accidentally commit a secret
+
+**Reporting Security Issues**: If you discover a security vulnerability, please report it by contacting kushmanmb through GitHub. **Do not create public issues for security vulnerabilities.**
+
+### Quick Security Tips
+
+- Never commit `.env` files (use `.env.example` as a template)
+- Never commit private keys, mnemonics, or API keys
+- Always load sensitive data from environment variables
+- Use `npm audit` to check for vulnerable dependencies
+- Review the comprehensive `.gitignore` file to understand what's protected
+
+## Contributing
+
+We welcome contributions! To ensure a smooth process:
+
+1. **Fork the repository** and create a feature branch
+2. **Read the documentation**: [CODING_GUIDELINES.md](CODING_GUIDELINES.md), [FILES.md](FILES.md)
+3. **Follow security practices**: Review [SECURITY.md](.github/SECURITY.md)
+4. **Write tests**: Ensure your changes are covered by tests
+5. **Run tests locally**: `npm test` before submitting
+6. **Submit a pull request** with a clear description of changes
+
+**Note**: This project uses a proprietary license. By contributing, you agree that your contributions will be licensed under the same terms. Authorization from kushmanmb is required for use.
+
+### Development Setup
+
+Common issues and solutions:
+
+**Issue**: `npm install` fails
+- Solution: Ensure you're using Node.js 18.x, 20.x, or 22.x
+
+**Issue**: Tests fail after changes
+- Solution: Review test output, ensure bonus trigger logic is correct
+
+**Issue**: Build produces no output
+- Solution: Check that `src/` directory has all required files
+
+**Issue**: `.env` file not working
+- Solution: Copy `.env.example` to `.env` and fill in your values
 
 ## License
 

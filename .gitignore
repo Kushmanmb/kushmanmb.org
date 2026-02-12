@@ -177,3 +177,104 @@ recovery-phrase.txt
 .password
 passwords.txt
 *password*.txt
+
+# Additional security-sensitive files
+*.env.production
+*.env.prod.local
+.env.*.production
+github_token
+.github_token
+*github-token*
+*oauth*token*
+
+# IDE-specific settings that may contain secrets or paths
+.vscode/settings.json
+.vscode/launch.json
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dataSources.local.xml
+.idea/dataSources/
+*.iml
+
+# macOS Extended Attributes (can contain metadata)
+._.DS_Store
+
+# npm/yarn alternative lock files
+pnpm-lock.yaml
+bun.lockb
+
+# Additional build artifacts
+*.tsbuildinfo
+*.buildinfo
+.eslintcache
+.stylelintcache
+.terser-cache
+
+# Test coverage artifacts
+.coverage
+htmlcov/
+.pytest_cache/
+jest_cache/
+.karma/
+
+# Documentation builds (if generated)
+docs/_build/
+site/
+_site/
+.docusaurus/
+.vuepress/dist/
+
+# Package manager caches
+.npm/
+.pnpm-store/
+.yarn/cache/
+bower_components/
+
+# Local workspace settings
+.code-workspace
+*.code-workspace
+
+# Vercel deployment artifacts
+.vercel
+
+# Next.js build output (if used in future)
+.next/
+out/
+
+# Nuxt.js build output (if used in future)
+.nuxt/
+
+# Gatsby files (if used in future)
+.cache/
+public/
+
+# VS Code history
+.history/
+
+# Local development databases
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Performance and profiling
+*.cpuprofile
+*.heapprofile
+*.heapsnapshot
+
+# Debug logs
+debug.log
+debug-*.log
+
+# Environment-specific configs
+*config.local*
+*config.dev*
+*config.prod*
+config.override.*
+
+# Backup and archive files
+*.tar
+*.tar.gz
+*.tgz
+*.zip.bak
+*.rar
+*.7z
