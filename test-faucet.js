@@ -136,6 +136,31 @@ async function runTests() {
     failed++;
   }
 
+  // Test 5: Verify wallet endpoint exists
+  console.log('\nTest 5: Wallet endpoint definition');
+  try {
+    const faucetCode = fs.readFileSync('./faucet.js', 'utf8');
+    
+    // Check for the GET /wallet endpoint
+    const walletEndpointMatch = faucetCode.match(/app\.get\s*\(\s*['"`]\/wallet['"`]/);
+    if (!walletEndpointMatch) {
+      throw new Error('Could not find GET /wallet endpoint in faucet.js');
+    }
+    
+    // Verify it returns wallet.address
+    const addressReturnMatch = faucetCode.match(/wallet\.address/);
+    if (!addressReturnMatch) {
+      throw new Error('Wallet endpoint should return wallet.address');
+    }
+    
+    console.log('✓ GET /wallet endpoint is properly defined');
+    console.log('  - Endpoint returns wallet address');
+    passed++;
+  } catch (error) {
+    console.error('✗ Wallet endpoint test failed:', error.message);
+    failed++;
+  }
+
   // Summary
   console.log('\n' + '='.repeat(50));
   console.log('Test Summary:');
