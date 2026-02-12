@@ -1,7 +1,7 @@
 {
   "name": "kushmanmb-org",
   "version": "1.0.0",
-  "description": "Toolkit with slot machine game, USDC faucet server, and Ethereum contract verification tools",
+  "description": "Toolkit with multiplying capabilities, USDC faucet server, and Ethereum contract verification tools",
   "scripts": {
     "build": "node build.js",
     "test": "node test.js",
@@ -12,11 +12,15 @@
     "verify": "node verify-contract.js"
   },
   "keywords": ["game", "slot-machine", "ethereum", "faucet", "contract-verification", "usdc", "testnet"],
+  "keywords": [
+    "game",
+    ""
+  ],
   "author": "kushmanmb",
   "license": "UNLICENSED",
   "dependencies": {
     "dotenv": "^16.3.1",
-    "ethers": "^5.7.2",
+    "ethers": "^6.16.0",
     "express": "^4.18.2"
   },
   "devDependencies": {
