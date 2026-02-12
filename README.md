@@ -197,6 +197,20 @@ The server will run at `http://localhost:3000`.
 
 ### API Endpoints
 
+**GET /wallet**
+
+Retrieve the faucet wallet address.
+
+Response (success):
+```json
+{
+  "address": "0x...",
+  "message": "This is the faucet wallet address that dispenses USDC tokens."
+}
+```
+
+This endpoint is safe to use as it only exposes the public wallet address, not the private key. The wallet address is also displayed in the console when the server starts.
+
 **POST /faucet**
 
 Request USDC tokens from the faucet.

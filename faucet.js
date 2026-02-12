@@ -37,6 +37,15 @@ const lastRequestTimes = {};
 
 app.use(express.json());
 
+// GET endpoint to retrieve the faucet wallet address
+// This is safe to expose as it only returns the public address, not the private key
+app.get('/wallet', (req, res) => {
+  res.json({ 
+    address: wallet.address,
+    message: 'This is the faucet wallet address that dispenses USDC tokens.'
+  });
+});
+
 app.post('/faucet', async (req, res) => {
   // Validate request body
   if (!req.body || !req.body.address) {
@@ -80,4 +89,8 @@ app.post('/faucet', async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Faucet server running at http://localhost:${port}`);
+  console.log(`Faucet wallet address: ${wallet.address}`);
+  console.log(`\nAvailable endpoints:`);
+  console.log(`  GET  /wallet  - View faucet wallet address`);
+  console.log(`  POST /faucet  - Request USDC tokens`);
 });
