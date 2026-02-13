@@ -2,7 +2,8 @@
 
 A slot machine game with performance optimizations and Ethereum testnet integration.
 
-> **Note**: For ownership and attribution information, see [OWNERSHIP.md](OWNERSHIP.md)
+> **Note**: For ownership and attribution information, see [OWNERSHIP.md](OWNERSHIP.md)  
+> **Creator Attribution**: See [BITCOIN_CREATOR_ATTRIBUTION.md](BITCOIN_CREATOR_ATTRIBUTION.md) for ENS-authenticated ownership claims
 
 ## Documentation
 
@@ -358,7 +359,16 @@ This repository uses GitHub Actions for continuous integration:
 
 ## Ownership
 
-For information about project ownership, component attribution, and licensing, please see [OWNERSHIP.md](OWNERSHIP.md).
+For information about project ownership, component attribution, ENS domain authentication, and licensing, please see:
+- [OWNERSHIP.md](OWNERSHIP.md) - Basic ownership information
+- [BITCOIN_CREATOR_ATTRIBUTION.md](BITCOIN_CREATOR_ATTRIBUTION.md) - Comprehensive creator attribution with ENS verification
+
+### ENS Domains
+
+Official ENS domains for identity verification:
+- kushmanmb.eth
+- kushmanmb.base.eth
+- yaketh.eth
 
 Code ownership is managed through the [CODEOWNERS](CODEOWNERS) file.
 

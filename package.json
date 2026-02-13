@@ -2,6 +2,15 @@
   "name": "kushmanmb-org",
   "version": "1.0.0",
   "description": "Toolkit with multiplying capabilities, USDC faucet server, and Ethereum contract verification tools",
+  "author": {
+    "name": "kushmanmb",
+    "ens": ["kushmanmb.eth", "kushmanmb.base.eth", "yaketh.eth"]
+  },
+  "homepage": "https://github.com/kushmanmb-org/kushmanmb.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kushmanmb-org/kushmanmb.org"
+  },
   "scripts": {
     "build": "node build.js",
     "test": "node test.js",
@@ -21,7 +30,10 @@
     "contract-verification",
     "usdc",
     "testnet",
-    "gitpoap"
+    "gitpoap",
+    "ens",
+    "kushmanmb.eth",
+    "yaketh.eth"
   ],
   "author": "kushmanmb",
   "license": "UNLICENSED",
