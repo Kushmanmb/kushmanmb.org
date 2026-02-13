@@ -2,6 +2,24 @@
 
 This directory contains examples demonstrating various tools and integrations available in this repository.
 
+## GitPOAP Fetching
+
+Example demonstrating how to fetch GitPOAPs (NFT badges for GitHub contributors) for an Ethereum address.
+
+### Files
+
+- **fetch-gitpoap-example.js** - Example script showing how to fetch GitPOAPs programmatically
+
+See the example for usage:
+```bash
+node examples/fetch-gitpoap-example.js
+```
+
+Or with a custom address:
+```bash
+node examples/fetch-gitpoap-example.js 0xYourEthereumAddress
+```
+
 ## Contract Verification
 
 Examples for verifying smart contracts on block explorers.

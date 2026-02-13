@@ -197,6 +197,50 @@ if (result.success) {
 }
 ```
 
+## GitPOAP Fetching
+
+This repository includes a tool to fetch GitPOAPs for a given Ethereum address. GitPOAP is a service that issues NFT badges (POAPs - Proof of Attendance Protocol) to GitHub contributors.
+
+### Usage
+
+Fetch GitPOAPs for an address:
+```bash
+npm run fetch-gitpoap -- --address 0x1234567890abcdef1234567890abcdef12345678
+```
+
+Or run directly:
+```bash
+node fetch-gitpoap.js --address 0x1234567890abcdef1234567890abcdef12345678
+```
+
+### Command Line Options
+
+- `--address` - Ethereum address to fetch GitPOAPs for (required)
+- `--help`, `-h` - Show help message
+
+### Programmatic Usage
+
+You can also use the GitPOAP fetcher as a module in your Node.js scripts:
+
+```javascript
+const { fetchGitPOAPs } = require('./fetch-gitpoap.js');
+
+const result = await fetchGitPOAPs({
+  address: '0x1234567890abcdef1234567890abcdef12345678',
+});
+
+if (result.success) {
+  console.log(`Found ${result.count} GitPOAP(s)`);
+  result.gitpoaps.forEach(poap => {
+    console.log(`- ${poap.gitPoapEventName}`);
+  });
+} else {
+  console.error('Failed:', result.error);
+}
+```
+
+For a complete example, see `examples/fetch-gitpoap-example.js`.
+
 ## USDC Faucet Server
 
 This repository also includes a USDC faucet server for dispensing USDC tokens on Ethereum testnet.
