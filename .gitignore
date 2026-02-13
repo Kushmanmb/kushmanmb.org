@@ -200,5 +200,4 @@ docker-compose.override.yml
 *.dockerfile.local
 
 # Fleeing 5-0 directory (contains unzipped build artifacts)
-Fleeing\ 5-0/
-"Fleeing 5-0/"
+Fleeing 5-0/
