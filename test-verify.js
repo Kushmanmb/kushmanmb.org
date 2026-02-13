@@ -215,6 +215,148 @@ try {
   failed++;
 }
 
+// Test 9: Validate API key sanitization
+console.log('\nTest 9: API key sanitization');
+try {
+  // Test with API key that has whitespace
+  let errorCaught = false;
+  try {
+    await verifyContract({
+      contractAddress: '0x1234567890123456789012345678901234567890',
+      sourceCode: 'contract Test {}',
+      contractName: 'Test',
+      compilerVersion: 'v0.8.20',
+      apiKey: '  testkey123  ', // API key with whitespace
+    });
+  } catch (error) {
+    // Should not throw for whitespace - it gets trimmed
+    if (error.message.includes('Etherscan API key')) {
+      errorCaught = true;
+    }
+  }
+  
+  // Test with invalid characters in API key
+  errorCaught = false;
+  try {
+    await verifyContract({
+      contractAddress: '0x1234567890123456789012345678901234567890',
+      sourceCode: 'contract Test {}',
+      contractName: 'Test',
+      compilerVersion: 'v0.8.20',
+      apiKey: 'test-key-with-dashes!@#',
+    });
+  } catch (error) {
+    if (error.message.includes('invalid characters')) {
+      errorCaught = true;
+    }
+  }
+  
+  if (!errorCaught) {
+    throw new Error('Should have caught invalid API key format');
+  }
+  
+  // Test with empty API key after trimming
+  errorCaught = false;
+  try {
+    await verifyContract({
+      contractAddress: '0x1234567890123456789012345678901234567890',
+      sourceCode: 'contract Test {}',
+      contractName: 'Test',
+      compilerVersion: 'v0.8.20',
+      apiKey: '   ',
+    });
+  } catch (error) {
+    if (error.message.includes('cannot be empty')) {
+      errorCaught = true;
+    }
+  }
+  
+  if (!errorCaught) {
+    throw new Error('Should have caught empty API key');
+  }
+  
+  console.log('✓ API key sanitization works correctly');
+  passed++;
+} catch (error) {
+  console.error('✗ API key sanitization test failed:', error.message);
+  failed++;
+}
+
+// Test 10: Validate constructor arguments format
+console.log('\nTest 10: Constructor arguments validation');
+try {
+  // Test with invalid hex characters
+  let errorCaught = false;
+  try {
+    await verifyContract({
+      contractAddress: '0x1234567890123456789012345678901234567890',
+      sourceCode: 'contract Test {}',
+      contractName: 'Test',
+      compilerVersion: 'v0.8.20',
+      apiKey: 'testkey123',
+      constructorArguments: '0xabcdefg', // Invalid hex (contains 'g')
+    });
+  } catch (error) {
+    if (error.message.includes('valid hex string')) {
+      errorCaught = true;
+    }
+  }
+  
+  if (!errorCaught) {
+    throw new Error('Should have caught invalid hex in constructor args');
+  }
+  
+  // Test with wrong length (not multiple of 64)
+  errorCaught = false;
+  try {
+    await verifyContract({
+      contractAddress: '0x1234567890123456789012345678901234567890',
+      sourceCode: 'contract Test {}',
+      contractName: 'Test',
+      compilerVersion: 'v0.8.20',
+      apiKey: 'testkey123',
+      constructorArguments: 'abcdef', // Too short, not multiple of 64
+    });
+  } catch (error) {
+    if (error.message.includes('ABI-encoded')) {
+      errorCaught = true;
+    }
+  }
+  
+  if (!errorCaught) {
+    throw new Error('Should have caught improperly encoded constructor args');
+  }
+  
+  // Test with valid constructor arguments
+  errorCaught = false;
+  try {
+    await verifyContract({
+      contractAddress: '0x1234567890123456789012345678901234567890',
+      sourceCode: 'contract Test {}',
+      contractName: 'Test',
+      compilerVersion: 'v0.8.20',
+      apiKey: 'testkey123',
+      constructorArguments: '0000000000000000000000001234567890123456789012345678901234567890', // 64 chars
+    });
+    // Should proceed without validation error (may fail on API call)
+  } catch (error) {
+    // Only flag as error if it's a validation error, not an API error
+    if (error.message.includes('valid hex string') || error.message.includes('ABI-encoded')) {
+      errorCaught = true;
+    }
+  }
+  
+  if (errorCaught) {
+    throw new Error('Valid constructor args should not throw validation error');
+  }
+  
+  console.log('✓ Constructor arguments validation works correctly');
+  passed++;
+} catch (error) {
+  console.error('✗ Constructor arguments validation test failed:', error.message);
+  failed++;
+}
+
 // Summary
 console.log('\n' + '='.repeat(50));
 console.log('Test Summary:');
