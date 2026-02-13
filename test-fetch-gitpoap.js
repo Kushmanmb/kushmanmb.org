@@ -14,6 +14,9 @@ const path = require('path');
 let testsPassed = 0;
 let testsFailed = 0;
 
+// Read file content once for efficiency
+const fileContent = fs.readFileSync('./fetch-gitpoap.js', 'utf8');
+
 /**
  * Test helper function
  */
@@ -47,7 +50,6 @@ test('fetch-gitpoap.js file exists', () => {
 
 // Test 3: Check for required dependencies
 test('Module requires ethers.js', () => {
-  const fileContent = fs.readFileSync('./fetch-gitpoap.js', 'utf8');
   if (!fileContent.includes("require('ethers')")) {
     throw new Error('Module does not require ethers.js');
   }
@@ -55,7 +57,6 @@ test('Module requires ethers.js', () => {
 
 // Test 4: Check for CLI interface
 test('Module has CLI interface', () => {
-  const fileContent = fs.readFileSync('./fetch-gitpoap.js', 'utf8');
   if (!fileContent.includes('require.main === module')) {
     throw new Error('Module does not have CLI interface');
   }
@@ -64,20 +65,21 @@ test('Module has CLI interface', () => {
   }
 });
 
-// Test 5: Validate address validation
+// Test 5: Validate address validation (check code patterns)
 test('Module validates Ethereum addresses', () => {
-  const fileContent = fs.readFileSync('./fetch-gitpoap.js', 'utf8');
   if (!fileContent.includes('ethers.isAddress')) {
     throw new Error('Module does not validate Ethereum addresses using ethers.isAddress');
   }
   if (!fileContent.includes('Invalid Ethereum address')) {
     throw new Error('Module does not provide error message for invalid address');
   }
+  if (!fileContent.includes('Address is required')) {
+    throw new Error('Module does not check for required address parameter');
+  }
 });
 
 // Test 6: Check API URL
 test('Module uses correct GitPOAP API URL', () => {
-  const fileContent = fs.readFileSync('./fetch-gitpoap.js', 'utf8');
   if (!fileContent.includes('public-api.gitpoap.io')) {
     throw new Error('Module does not use correct GitPOAP API URL');
   }
@@ -88,7 +90,6 @@ test('Module uses correct GitPOAP API URL', () => {
 
 // Test 7: Error handling
 test('Module has proper error handling', () => {
-  const fileContent = fs.readFileSync('./fetch-gitpoap.js', 'utf8');
   if (!fileContent.includes('try') || !fileContent.includes('catch')) {
     throw new Error('Module does not have try-catch error handling');
   }
@@ -99,7 +100,6 @@ test('Module has proper error handling', () => {
 
 // Test 8: HTTPS request implementation
 test('Module uses https module for requests', () => {
-  const fileContent = fs.readFileSync('./fetch-gitpoap.js', 'utf8');
   if (!fileContent.includes("require('https')")) {
     throw new Error('Module does not require https module');
   }
@@ -110,7 +110,6 @@ test('Module uses https module for requests', () => {
 
 // Test 9: Response structure
 test('Module returns structured response', () => {
-  const fileContent = fs.readFileSync('./fetch-gitpoap.js', 'utf8');
   if (!fileContent.includes('gitpoaps:')) {
     throw new Error('Response does not include gitpoaps field');
   }
@@ -121,7 +120,6 @@ test('Module returns structured response', () => {
 
 // Test 10: Check for proper console output
 test('Module provides user-friendly console output', () => {
-  const fileContent = fs.readFileSync('./fetch-gitpoap.js', 'utf8');
   if (!fileContent.includes('console.log')) {
     throw new Error('Module does not provide console output');
   }
@@ -132,7 +130,6 @@ test('Module provides user-friendly console output', () => {
 
 // Test 11: Handles 404 responses
 test('Module handles 404 responses gracefully', () => {
-  const fileContent = fs.readFileSync('./fetch-gitpoap.js', 'utf8');
   if (!fileContent.includes('404')) {
     throw new Error('Module does not handle 404 status code');
   }
@@ -140,7 +137,6 @@ test('Module handles 404 responses gracefully', () => {
 
 // Test 12: Validates array responses
 test('Module validates array responses', () => {
-  const fileContent = fs.readFileSync('./fetch-gitpoap.js', 'utf8');
   if (!fileContent.includes('Array.isArray')) {
     throw new Error('Module does not validate array responses');
   }

@@ -13,10 +13,15 @@
     "verify": "node verify-contract.js",
     "fetch-gitpoap": "node fetch-gitpoap.js"
   },
-  "keywords": ["game", "slot-machine", "ethereum", "faucet", "contract-verification", "usdc", "testnet"],
   "keywords": [
     "game",
-    ""
+    "slot-machine",
+    "ethereum",
+    "faucet",
+    "contract-verification",
+    "usdc",
+    "testnet",
+    "gitpoap"
   ],
   "author": "kushmanmb",
   "license": "UNLICENSED",
