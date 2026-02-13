@@ -69,6 +69,8 @@ app.post('/faucet', async (req, res) => {
 
   // Check faucet balance
   const balance = await usdcContract.balanceOf(wallet.address);
+  // Note: Using native BigInt comparison (<) instead of deprecated v5 .lt() method
+  // ethers.js v6 returns BigInt values which support native comparison operators
   if (balance < DISPENSE_AMOUNT) {
     return res.status(500).json({ message: 'Faucet out of funds.' });
   }
