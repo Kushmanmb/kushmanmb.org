@@ -144,7 +144,35 @@ const encoded = encodeConstructorArgs(
 console.log(encoded); // Use this value for --constructor-args
 ```
 
+### Security Features
+
+The contract verification tool implements the following security best practices:
+
+1. **API Key Protection**
+   - API keys are transmitted via POST request body, never in URL query parameters
+   - Prevents API key exposure in browser history, server logs, and HTTP referrer headers
+   - API keys are automatically validated and sanitized (trimmed, alphanumeric check)
+
+2. **Input Validation**
+   - Contract addresses validated using ethers.js `isAddress()` 
+   - Constructor arguments validated for proper hex format and ABI encoding
+   - Optimization settings validated (must be 0 or 1)
+   - Compiler version and other parameters validated
+
+3. **Error Message Sanitization**
+   - Error messages are sanitized to prevent information leakage
+   - Only safe error patterns are exposed to users
+   - Internal API details are not revealed in error messages
+
+4. **Environment Variable Security**
+   - API keys loaded from `.env` file (not hardcoded)
+   - `.env` file is gitignored to prevent accidental commits
+   - `.env.example` provided as a template
+
+For a complete example demonstrating safe verification practices, see `examples/verify-0xe67c465.js`.
+
 ### Programmatic Usage
+
 
 You can also use the verification tool as a module in your Node.js scripts:
 
