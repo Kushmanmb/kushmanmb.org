@@ -350,6 +350,51 @@ try {
     throw new Error('Valid constructor args should not throw validation error');
   }
   
+  // Test with empty string (should pass - no constructor args)
+  errorCaught = false;
+  try {
+    await verifyContract({
+      contractAddress: '0x1234567890123456789012345678901234567890',
+      sourceCode: 'contract Test {}',
+      contractName: 'Test',
+      compilerVersion: 'v0.8.20',
+      apiKey: 'testkey123',
+      constructorArguments: '', // Empty string
+    });
+    // Should proceed without validation error
+  } catch (error) {
+    if (error.message.includes('valid hex string') || error.message.includes('ABI-encoded')) {
+      errorCaught = true;
+    }
+  }
+  
+  if (errorCaught) {
+    throw new Error('Empty constructor args should pass validation');
+  }
+  
+  // Test with 128 characters (2 * 64 - two arguments)
+  errorCaught = false;
+  try {
+    await verifyContract({
+      contractAddress: '0x1234567890123456789012345678901234567890',
+      sourceCode: 'contract Test {}',
+      contractName: 'Test',
+      compilerVersion: 'v0.8.20',
+      apiKey: 'testkey123',
+      constructorArguments: '0000000000000000000000001234567890123456789012345678901234567890' +
+                           '0000000000000000000000005678901234567890123456789012345678901234', // 128 chars
+    });
+    // Should proceed without validation error
+  } catch (error) {
+    if (error.message.includes('valid hex string') || error.message.includes('ABI-encoded')) {
+      errorCaught = true;
+    }
+  }
+  
+  if (errorCaught) {
+    throw new Error('128-char constructor args should pass validation');
+  }
+  
   console.log('✓ Constructor arguments validation works correctly');
   passed++;
 } catch (error) {
