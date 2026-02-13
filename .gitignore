@@ -177,3 +177,42 @@ recovery-phrase.txt
 .password
 passwords.txt
 *password*.txt
+
+# Bitcoin and cryptocurrency wallets
+*.wallet.dat
+wallet.dat
+bitcoin-wallet/
+.bitcoin/
+bitcoin.conf
+*bitcoin-private*
+btc-wallet/
+*.btc
+bitcoin-keys/
+cryptocurrency-wallets/
+crypto-keys/
+
+# ENS and domain management
+ens-config.json
+ens-private.json
+*-ens-key*
+ens-signing-key*
+domain-keys/
+.ens-cache/
+ens-credentials/
+
+# Hardware wallet and signing devices
+ledger/
+trezor/
+*.ledger
+*.trezor
+signing-devices/
+
+# Mnemonic phrases and seed phrases
+mnemonic*.txt
+seed-phrase*.txt
+recovery-phrase*.txt
+*-mnemonic.txt
+*-seed-phrase.txt
+12-word*.txt
+24-word*.txt
+bip39*.txt

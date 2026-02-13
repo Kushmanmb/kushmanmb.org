@@ -1,6 +1,31 @@
-# Security Summary - Contract Verification Improvements
+# Security Summary
 
 ## Overview
+
+This document summarizes the security improvements and verification methods for this project, including ENS-based identity authentication and contract verification functionality.
+
+## Identity Verification
+
+### ENS Domain Authentication
+
+This project uses Ethereum Name Service (ENS) domains for decentralized identity verification:
+
+- **kushmanmb.eth** - Primary Ethereum mainnet identity
+- **kushmanmb.base.eth** - Base L2 network identity  
+- **yaketh.eth** - Secondary Ethereum mainnet identity
+
+**Verification Methods**:
+1. On-chain ENS resolution via Ethereum mainnet
+2. Reverse resolution to confirm address ownership
+3. Content hash verification (if configured)
+
+For complete authentication details, see [CREATOR_ATTRIBUTION.md](CREATOR_ATTRIBUTION.md).
+
+---
+
+## Contract Verification Security
+
+### Overview
 
 This document summarizes the security improvements implemented for the contract verification functionality in response to the requirement to verify contract `0xe67c465de72d439352e2a137dfc06952e59705fc` using safe practices.
 

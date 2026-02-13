@@ -4,6 +4,15 @@
 
 This project is owned and maintained by **kushmanmb** (GitHub: @Kushmanmb).
 
+### ENS Domain Authentication
+
+Official ENS domains for identity verification:
+- **kushmanmb.eth** - Primary Ethereum mainnet identity
+- **kushmanmb.base.eth** - Base L2 network identity  
+- **yaketh.eth** - Secondary Ethereum mainnet identity
+
+For comprehensive ownership claims and verification methods, see [CREATOR_ATTRIBUTION.md](CREATOR_ATTRIBUTION.md).
+
 ## Repository Information
 
 - **Repository**: [Kushmanmb/kywmahmb](https://github.com/Kushmanmb/kywmahmb)
@@ -74,7 +83,9 @@ For authorization to use or contribute to this project, please contact kushmanmb
 
 ## Contact
 
-For questions about ownership, licensing, or contributions, please contact the project owner through GitHub.
+For questions about ownership, licensing, or contributions, please contact the project owner:
+- **GitHub**: @Kushmanmb
+- **ENS Domains**: kushmanmb.eth, kushmanmb.base.eth, or yaketh.eth
 
 ## Disclaimer
 
