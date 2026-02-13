@@ -80,11 +80,8 @@ test('Module validates Ethereum addresses', () => {
 
 // Test 6: Check API URL
 test('Module uses correct GitPOAP API URL', () => {
-  if (!fileContent.includes('public-api.gitpoap.io')) {
+  if (!fileContent.includes('https://public-api.gitpoap.io/v1/address/')) {
     throw new Error('Module does not use correct GitPOAP API URL');
-  }
-  if (!fileContent.includes('/v1/address/')) {
-    throw new Error('Module does not use correct API endpoint path');
   }
 });
 
