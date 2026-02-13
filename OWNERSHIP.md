@@ -11,7 +11,7 @@ Official ENS domains for identity verification:
 - **kushmanmb.base.eth** - Base L2 network identity  
 - **yaketh.eth** - Secondary Ethereum mainnet identity
 
-For comprehensive ownership claims and verification methods, see [BITCOIN_CREATOR_ATTRIBUTION.md](BITCOIN_CREATOR_ATTRIBUTION.md).
+For comprehensive ownership claims and verification methods, see [CREATOR_ATTRIBUTION.md](CREATOR_ATTRIBUTION.md).
 
 ## Repository Information
 

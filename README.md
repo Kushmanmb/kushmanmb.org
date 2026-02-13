@@ -3,7 +3,7 @@
 A slot machine game with performance optimizations and Ethereum testnet integration.
 
 > **Note**: For ownership and attribution information, see [OWNERSHIP.md](OWNERSHIP.md)  
-> **Creator Attribution**: See [BITCOIN_CREATOR_ATTRIBUTION.md](BITCOIN_CREATOR_ATTRIBUTION.md) for ENS-authenticated ownership claims
+> **Creator Attribution**: See [CREATOR_ATTRIBUTION.md](CREATOR_ATTRIBUTION.md) for ENS-authenticated ownership claims
 
 ## Documentation
 
@@ -361,7 +361,7 @@ This repository uses GitHub Actions for continuous integration:
 
 For information about project ownership, component attribution, ENS domain authentication, and licensing, please see:
 - [OWNERSHIP.md](OWNERSHIP.md) - Basic ownership information
-- [BITCOIN_CREATOR_ATTRIBUTION.md](BITCOIN_CREATOR_ATTRIBUTION.md) - Comprehensive creator attribution with ENS verification
+- [CREATOR_ATTRIBUTION.md](CREATOR_ATTRIBUTION.md) - Comprehensive creator attribution with ENS verification
 
 ### ENS Domains
 

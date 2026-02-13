@@ -35,7 +35,6 @@
     "kushmanmb.eth",
     "yaketh.eth"
   ],
-  "author": "kushmanmb",
   "license": "UNLICENSED",
   "dependencies": {
     "dotenv": "^16.3.1",

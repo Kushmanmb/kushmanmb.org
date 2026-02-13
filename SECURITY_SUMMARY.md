@@ -19,7 +19,7 @@ This project uses Ethereum Name Service (ENS) domains for decentralized identity
 2. Reverse resolution to confirm address ownership
 3. Content hash verification (if configured)
 
-For complete authentication details, see [BITCOIN_CREATOR_ATTRIBUTION.md](BITCOIN_CREATOR_ATTRIBUTION.md).
+For complete authentication details, see [CREATOR_ATTRIBUTION.md](CREATOR_ATTRIBUTION.md).
 
 ---
 

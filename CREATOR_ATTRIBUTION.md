@@ -1,4 +1,4 @@
-# Bitcoin Creator Attribution & Ownership Announcement
+# Creator Attribution & Ownership Announcement
 
 ## Identity Declaration
 
@@ -92,14 +92,14 @@ All code in this repository is authored by kushmanmb unless otherwise specified 
 
 ### Historical Context
 
-This project represents original work created and maintained by kushmanmb. The term "Bitcoin creator status" in this context refers to:
+This project represents original work created and maintained by kushmanmb. The creator status refers to:
 
 1. **Innovation**: Creating original, novel implementations in the blockchain/cryptocurrency space
 2. **Contribution**: Contributing tools and utilities to the Ethereum ecosystem
 3. **Ownership**: Establishing clear ownership and attribution for original works
 4. **Authentication**: Using ENS domains for cryptographic identity verification
 
-**Note**: This document does not claim to be Satoshi Nakamoto or the creator of Bitcoin itself. "Bitcoin creator status" refers to creator/innovator status in the broader cryptocurrency and blockchain ecosystem.
+This document establishes creator and innovator status in the cryptocurrency and blockchain ecosystem for this specific project and its components.
 
 ## Security & Authentication
 
