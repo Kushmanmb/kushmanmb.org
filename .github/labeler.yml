@@ -19,7 +19,7 @@ source:
 # Test changes
 tests:
   - changed-files:
-    - any-glob-to-any-file: ['**/test*.js', 'test-*.js', 'examples/**/*']
+    - any-glob-to-any-file: ['**/test*.js', 'examples/**/*']
 
 # Build/Configuration changes
 build:
