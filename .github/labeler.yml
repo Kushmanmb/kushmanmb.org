@@ -19,12 +19,12 @@ source:
 # Test changes
 tests:
   - changed-files:
-    - any-glob-to-any-file: ['test*.js', 'examples/**/*']
+    - any-glob-to-any-file: ['**/test*.js', 'test-*.js', 'examples/**/*']
 
 # Build/Configuration changes
 build:
   - changed-files:
-    - any-glob-to-any-file: ['build.js', 'webpack.config.js', 'package.json', 'package-lock.json', 'yarn.lock', 'Dockerfile']
+    - any-glob-to-any-file: ['build.js', 'webpack.config.js', 'Dockerfile']
 
 # JavaScript changes
 javascript:
@@ -39,7 +39,7 @@ dependencies:
 # Smart contracts/Ethereum related
 ethereum:
   - changed-files:
-    - any-glob-to-any-file: ['verify-contract.js', 'faucet.js', 'fetch-gitpoap.js', 'test-verify.js', 'test-faucet.js', 'test-fetch-gitpoap.js', 'examples/verify-*.js', 'examples/fetch-*.js']
+    - any-glob-to-any-file: ['**/*contract*.js', '**/*faucet*.js', '**/*gitpoap*.js', '**/*verify*.js', 'ethscab']
 
 # Security related
 security:
