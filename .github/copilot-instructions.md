@@ -5,7 +5,7 @@
 This is a multi-component toolkit repository containing:
 
 1. **Fleeing 5-0** - A slot machine game with performance-optimized JavaScript code
-2. **USDC Faucet Server** - An Express.js server for dispensing USDC tokens on Ethereum testnet
+2. **USDC Faucet Server** - An Express.js server for dispensing USDC tokens on Ethereum Sepolia testnet
 3. **Contract Verification Tool** - Utility for verifying smart contracts on Etherscan-based explorers
 4. **GitPOAP Fetcher** - Tool for fetching GitPOAP badges associated with Ethereum addresses
 
@@ -189,11 +189,13 @@ Required environment variables in `.env`:
 - `USDC_CONTRACT_ADDRESS`: Address of USDC contract on Sepolia testnet
 
 ### Features
-- **Dispense Amount**: 10 USDC per request (configurable via `DISPENSE_AMOUNT`)
-- **Cooldown**: 12 hours between requests per address (configurable via `COOLDOWN`)
+- **Dispense Amount**: 10 USDC per request (set in code via `DISPENSE_AMOUNT` constant)
+- **Cooldown**: 12 hours between requests per address (set in code via `COOLDOWN` constant)
 - **Endpoints**:
   - `GET /wallet` - Returns the faucet wallet public address
   - `POST /faucet` - Dispenses USDC to a valid address
+
+Note: The dispense amount and cooldown period are configured as constants in `faucet.js` rather than environment variables. To change them, modify the `DISPENSE_AMOUNT` and `COOLDOWN` constants in the code.
 
 ### Security Features
 - Address validation using `ethers.isAddress()`
