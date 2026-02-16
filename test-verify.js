@@ -2,6 +2,9 @@
 const { encodeConstructorArgs, NETWORKS, verifyContract } = require('./verify-contract.js');
 const { ethers } = require('ethers');
 
+// Test API key - this is NOT a real Etherscan API key, only for testing validation logic
+const TEST_API_KEY = 'testkey123';
+
 async function runTests() {
   console.log('Testing verify-contract.js module...\n');
 
@@ -226,7 +229,7 @@ try {
       sourceCode: 'contract Test {}',
       contractName: 'Test',
       compilerVersion: 'v0.8.20',
-      apiKey: '  testkey123  ', // API key with whitespace
+      apiKey: `  ${TEST_API_KEY}  `, // API key with whitespace
     });
   } catch (error) {
     // Should not throw for whitespace - it gets trimmed
@@ -293,7 +296,7 @@ try {
       sourceCode: 'contract Test {}',
       contractName: 'Test',
       compilerVersion: 'v0.8.20',
-      apiKey: 'testkey123',
+      apiKey: TEST_API_KEY,
       constructorArguments: '0xabcdefg', // Invalid hex (contains 'g')
     });
   } catch (error) {
@@ -314,7 +317,7 @@ try {
       sourceCode: 'contract Test {}',
       contractName: 'Test',
       compilerVersion: 'v0.8.20',
-      apiKey: 'testkey123',
+      apiKey: TEST_API_KEY,
       constructorArguments: 'abcdef', // Too short, not multiple of 64
     });
   } catch (error) {
@@ -335,7 +338,7 @@ try {
       sourceCode: 'contract Test {}',
       contractName: 'Test',
       compilerVersion: 'v0.8.20',
-      apiKey: 'testkey123',
+      apiKey: TEST_API_KEY,
       constructorArguments: '0000000000000000000000001234567890123456789012345678901234567890', // 64 chars
     });
     // Should proceed without validation error (may fail on API call)
@@ -358,7 +361,7 @@ try {
       sourceCode: 'contract Test {}',
       contractName: 'Test',
       compilerVersion: 'v0.8.20',
-      apiKey: 'testkey123',
+      apiKey: TEST_API_KEY,
       constructorArguments: '', // Empty string
     });
     // Should proceed without validation error
@@ -380,7 +383,7 @@ try {
       sourceCode: 'contract Test {}',
       contractName: 'Test',
       compilerVersion: 'v0.8.20',
-      apiKey: 'testkey123',
+      apiKey: TEST_API_KEY,
       constructorArguments: '0000000000000000000000001234567890123456789012345678901234567890' +
                            '0000000000000000000000005678901234567890123456789012345678901234', // 128 chars
     });
