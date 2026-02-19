@@ -19,8 +19,18 @@ if (!process.env.USDC_CONTRACT_ADDRESS) {
 }
 const USDC_ADDRESS = process.env.USDC_CONTRACT_ADDRESS;
 const USDC_ABI = [
+  // Standard ERC20 transfer functions
   'function transfer(address to, uint256 value) public returns (bool)',
+  'function transferFrom(address from, address to, uint256 value) public returns (bool)',
+  'function approve(address spender, uint256 value) public returns (bool)',
+  
+  // Standard ERC20 view functions
   'function balanceOf(address owner) view returns (uint256)',
+  'function allowance(address owner, address spender) view returns (uint256)',
+  'function totalSupply() view returns (uint256)',
+  'function decimals() view returns (uint8)',
+  'function name() view returns (string)',
+  'function symbol() view returns (string)',
 ];
 
 // Create USDC contract instance
