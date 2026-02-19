@@ -172,8 +172,9 @@ async function runTests() {
   try {
     const faucetCode = fs.readFileSync('./faucet.js', 'utf8');
     
-    // Extract USDC_ABI definition
-    const abiMatch = faucetCode.match(/const USDC_ABI = \[([\s\S]*?)\];/);
+    // Extract USDC_ABI definition with more specific pattern
+    // Match from "const USDC_ABI = [" to the closing "];" ensuring we get the full array
+    const abiMatch = faucetCode.match(/const\s+USDC_ABI\s*=\s*\[([\s\S]*?)\]\s*;/);
     if (!abiMatch) {
       throw new Error('Could not find USDC_ABI definition in faucet.js');
     }
@@ -193,10 +194,12 @@ async function runTests() {
       'symbol'
     ];
     
-    // Check for each required function
+    // Check for each required function with properly escaped regex
     const missingFunctions = [];
     for (const funcName of requiredFunctions) {
-      const funcRegex = new RegExp(`function\\s+${funcName}\\s*\\(`);
+      // Escape the function name to handle any special regex characters
+      const escapedFuncName = funcName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const funcRegex = new RegExp(`function\\s+${escapedFuncName}\\s*\\(`);
       if (!funcRegex.test(abiContent)) {
         missingFunctions.push(funcName);
       }
