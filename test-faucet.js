@@ -167,6 +167,55 @@ async function runTests() {
     failed++;
   }
 
+  // Test 6: Verify ERC20 ABI completeness
+  console.log('\nTest 6: ERC20 ABI completeness');
+  try {
+    const faucetCode = fs.readFileSync('./faucet.js', 'utf8');
+    
+    // Extract USDC_ABI definition
+    const abiMatch = faucetCode.match(/const USDC_ABI = \[([\s\S]*?)\];/);
+    if (!abiMatch) {
+      throw new Error('Could not find USDC_ABI definition in faucet.js');
+    }
+    
+    const abiContent = abiMatch[1];
+    
+    // Define required ERC20 functions
+    const requiredFunctions = [
+      'transfer',
+      'transferFrom',
+      'approve',
+      'balanceOf',
+      'allowance',
+      'totalSupply',
+      'decimals',
+      'name',
+      'symbol'
+    ];
+    
+    // Check for each required function
+    const missingFunctions = [];
+    for (const funcName of requiredFunctions) {
+      const funcRegex = new RegExp(`function\\s+${funcName}\\s*\\(`);
+      if (!funcRegex.test(abiContent)) {
+        missingFunctions.push(funcName);
+      }
+    }
+    
+    if (missingFunctions.length > 0) {
+      throw new Error(`Missing ERC20 functions in ABI: ${missingFunctions.join(', ')}`);
+    }
+    
+    console.log('✓ USDC_ABI includes all standard ERC20 functions');
+    console.log(`  - Verified ${requiredFunctions.length} ERC20 functions are defined`);
+    console.log('  - Transfer functions: transfer, transferFrom, approve');
+    console.log('  - View functions: balanceOf, allowance, totalSupply, decimals, name, symbol');
+    passed++;
+  } catch (error) {
+    console.error('✗ ERC20 ABI completeness test failed:', error.message);
+    failed++;
+  }
+
   // Summary
   console.log('\n' + '='.repeat(50));
   console.log('Test Summary:');
