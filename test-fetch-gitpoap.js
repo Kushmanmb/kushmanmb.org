@@ -96,12 +96,12 @@ test('Module has proper error handling', () => {
 });
 
 // Test 8: HTTPS request implementation
-test('Module uses https module for requests', () => {
-  if (!fileContent.includes("require('https')")) {
-    throw new Error('Module does not require https module');
+test('Module uses http-utils for requests', () => {
+  if (!fileContent.includes("require('./lib/http-utils')")) {
+    throw new Error('Module does not require http-utils module');
   }
-  if (!fileContent.includes('https.request')) {
-    throw new Error('Module does not use https.request');
+  if (!fileContent.includes('makeRequest')) {
+    throw new Error('Module does not use makeRequest function');
   }
 });
 

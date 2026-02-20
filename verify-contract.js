@@ -1,6 +1,6 @@
 require('dotenv').config();
-const https = require('https');
 const { ethers } = require('ethers');
+const { makeRequest } = require('./lib/http-utils');
 
 // Network configurations
 const NETWORKS = {
@@ -122,7 +122,10 @@ async function verifyContract(options) {
 
   // Submit verification request
   try {
-    const submitResult = await makeRequest(apiUrl, postData);
+    const submitResult = await makeRequest(apiUrl, {
+      method: 'POST',
+      postData: postData,
+    });
     
     if (submitResult.status !== '1') {
       const sanitizedError = sanitizeErrorMessage(submitResult.result);
@@ -197,46 +200,6 @@ function sanitizeErrorMessage(errorMessage) {
 }
 
 /**
- * Make HTTPS POST request to Etherscan API
- */
-function makeRequest(url, postData) {
-  return new Promise((resolve, reject) => {
-    const urlObj = new URL(url);
-    const options = {
-      hostname: urlObj.hostname,
-      path: urlObj.pathname,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': Buffer.byteLength(postData),
-      },
-    };
-
-    const req = https.request(options, (res) => {
-      let data = '';
-      res.on('data', (chunk) => {
-        data += chunk;
-      });
-      res.on('end', () => {
-        try {
-          const response = JSON.parse(data);
-          resolve(response);
-        } catch (error) {
-          reject(new Error(`Failed to parse response: ${data}`));
-        }
-      });
-    });
-
-    req.on('error', (error) => {
-      reject(error);
-    });
-
-    req.write(postData);
-    req.end();
-  });
-}
-
-/**
  * Poll Etherscan API for verification status
  * Uses POST instead of GET to avoid exposing API key in URL
  */
@@ -253,7 +216,10 @@ async function pollVerificationStatus(apiUrl, apiKey, guid, maxAttempts = 30) {
     }).toString();
     
     try {
-      const response = await makeRequest(apiUrl, postData);
+      const response = await makeRequest(apiUrl, {
+        method: 'POST',
+        postData: postData,
+      });
 
       // Check if verification is complete (success or failure)
       if (response.result !== 'Pending in queue') {

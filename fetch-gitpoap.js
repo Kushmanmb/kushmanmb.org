@@ -1,6 +1,6 @@
 require('dotenv').config();
-const https = require('https');
 const { ethers } = require('ethers');
+const { makeRequest } = require('./lib/http-utils');
 
 /**
  * Fetch GitPOAPs for a given address
@@ -28,7 +28,29 @@ async function fetchGitPOAPs(options) {
   console.log(`Fetching GitPOAPs for address: ${address}...`);
 
   try {
-    const result = await makeRequest(apiUrl);
+    const result = await makeRequest(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'kushmanmb-org/1.0.0',
+      },
+      statusHandler: (res, data) => {
+        // Handle 404 - no GitPOAPs found
+        if (res.statusCode === 404) {
+          return [];
+        }
+        // Handle non-200 status codes
+        if (res.statusCode !== 200) {
+          throw new Error(`API request failed with status ${res.statusCode}: ${data}`);
+        }
+        // Parse JSON response
+        try {
+          return JSON.parse(data);
+        } catch (error) {
+          throw new Error(`Failed to parse response: ${data}`);
+        }
+      },
+    });
     
     if (!result) {
       throw new Error('Failed to fetch GitPOAPs: Empty response');
@@ -69,54 +91,6 @@ async function fetchGitPOAPs(options) {
       error: error.message,
     };
   }
-}
-
-/**
- * Make HTTPS GET request to GitPOAP API
- */
-function makeRequest(url) {
-  return new Promise((resolve, reject) => {
-    const urlObj = new URL(url);
-    const options = {
-      hostname: urlObj.hostname,
-      path: urlObj.pathname,
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'User-Agent': 'kushmanmb-org/1.0.0',
-      },
-    };
-
-    const req = https.request(options, (res) => {
-      let data = '';
-      res.on('data', (chunk) => {
-        data += chunk;
-      });
-      res.on('end', () => {
-        if (res.statusCode === 404) {
-          // No GitPOAPs found for this address
-          resolve([]);
-          return;
-        }
-        if (res.statusCode !== 200) {
-          reject(new Error(`API request failed with status ${res.statusCode}: ${data}`));
-          return;
-        }
-        try {
-          const response = JSON.parse(data);
-          resolve(response);
-        } catch (error) {
-          reject(new Error(`Failed to parse response: ${data}`));
-        }
-      });
-    });
-
-    req.on('error', (error) => {
-      reject(new Error(`Network error: ${error.message}`));
-    });
-
-    req.end();
-  });
 }
 
 /**
