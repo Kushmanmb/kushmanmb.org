@@ -17,6 +17,7 @@
     "test:verify": "node test-verify.js",
     "test:faucet": "node test-faucet.js",
     "test:gitpoap": "node test-fetch-gitpoap.js",
+    "test:owner": "node test-validate-owner.js",
     "webpack": "webpack --mode production",
     "faucet": "node faucet.js",
     "verify": "node verify-contract.js",

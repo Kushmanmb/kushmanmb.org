@@ -2,7 +2,68 @@
 
 ## Overview
 
-This document summarizes the security improvements and verification methods for this project, including ENS-based identity authentication and contract verification functionality.
+This document summarizes the security improvements and verification methods for this project, including ENS-based identity authentication, contract verification functionality, and repository owner validation.
+
+## Repository Owner Validation
+
+### Overview
+
+This project implements strict owner validation to ensure scripts and workflows only run in authorized repositories. This prevents unauthorized use if the repository is forked or cloned by unauthorized parties.
+
+**Allowed Repository Owners**:
+- `kushmanmb-org`
+- `kushmanmb`
+
+### Implementation
+
+Owner validation is implemented at two levels:
+
+#### 1. GitHub Workflows
+
+All GitHub Actions workflows include a validation step that checks the repository owner before executing any code:
+
+```bash
+ALLOWED_OWNERS=("kushmanmb-org" "kushmanmb")
+REPO_OWNER="${{ github.repository_owner }}"
+
+if [[ ! " ${ALLOWED_OWNERS[@]} " =~ " ${REPO_OWNER} " ]]; then
+  echo "❌ Error: This workflow can only run in repositories owned by: ${ALLOWED_OWNERS[@]}"
+  echo "Current repository owner: ${REPO_OWNER}"
+  exit 1
+fi
+```
+
+**Affected Workflows**:
+- CI/CD Pipeline (`.github/workflows/ci.yml`)
+- Node.js CI (`.github/workflows/node.js.yml`)
+- Webpack Build (`.github/workflows/webpack.yml`)
+- Pull Request Labeler (`.github/workflows/labeler.yml`)
+
+#### 2. JavaScript Scripts
+
+All critical JavaScript scripts validate repository ownership on startup using the `validate-owner.js` module:
+
+```javascript
+const { validateOwner } = require('./validate-owner');
+validateOwner({ silent: false });
+```
+
+**Protected Scripts**:
+- `verify-contract.js` - Smart contract verification
+- `fetch-gitpoap.js` - GitPOAP fetching
+- `faucet.js` - USDC faucet server
+
+### Validation Module
+
+The `validate-owner.js` module provides:
+- `validateOwner(options)` - Validates current repository owner
+- `getRepositoryOwner()` - Retrieves repository owner from git config or environment
+- `getAllowedOwners()` - Returns list of allowed owners
+- `ALLOWED_OWNERS` - Constant array of allowed owner names
+
+**Testing**: Run `npm run test:owner` to verify owner validation functionality.
+
+---
 
 ## Identity Verification
 
