@@ -1,6 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const { ethers } = require('ethers');
+const { validateOwner } = require('./validate-owner');
+
+// Validate repository owner before starting the server
+validateOwner({ silent: false });
 
 const app = express();
 const port = 3000;

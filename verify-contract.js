@@ -1,6 +1,10 @@
 require('dotenv').config();
 const https = require('https');
 const { ethers } = require('ethers');
+const { validateOwner } = require('./validate-owner');
+
+// Validate repository owner before proceeding
+validateOwner({ silent: false });
 
 // Network configurations
 const NETWORKS = {

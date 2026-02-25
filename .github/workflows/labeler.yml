@@ -16,6 +16,18 @@ jobs:
     timeout-minutes: 5
 
     steps:
+    - name: Validate Repository Owner
+      run: |
+        ALLOWED_OWNERS=("kushmanmb-org" "kushmanmb")
+        REPO_OWNER="${{ github.repository_owner }}"
+        
+        if [[ ! " ${ALLOWED_OWNERS[@]} " =~ " ${REPO_OWNER} " ]]; then
+          echo "❌ Error: This workflow can only run in repositories owned by: ${ALLOWED_OWNERS[@]}"
+          echo "Current repository owner: ${REPO_OWNER}"
+          exit 1
+        fi
+        echo "✓ Repository owner validation passed: ${REPO_OWNER}"
+
     - name: Checkout code
       uses: actions/checkout@v4
       with:
