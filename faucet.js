@@ -1,6 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const { ethers } = require('ethers');
+const { validateOwner } = require('./validate-owner');
+
+// Validate repository owner before starting the server
+validateOwner({ silent: false });
 
 const app = express();
 const port = 3000;
@@ -19,8 +23,18 @@ if (!process.env.USDC_CONTRACT_ADDRESS) {
 }
 const USDC_ADDRESS = process.env.USDC_CONTRACT_ADDRESS;
 const USDC_ABI = [
+  // Standard ERC20 transfer functions
   'function transfer(address to, uint256 value) public returns (bool)',
+  'function transferFrom(address from, address to, uint256 value) public returns (bool)',
+  'function approve(address spender, uint256 value) public returns (bool)',
+  
+  // Standard ERC20 view functions
   'function balanceOf(address owner) view returns (uint256)',
+  'function allowance(address owner, address spender) view returns (uint256)',
+  'function totalSupply() view returns (uint256)',
+  'function decimals() view returns (uint8)',
+  'function name() view returns (string)',
+  'function symbol() view returns (string)',
 ];
 
 // Create USDC contract instance
@@ -69,7 +83,9 @@ app.post('/faucet', async (req, res) => {
 
   // Check faucet balance
   const balance = await usdcContract.balanceOf(wallet.address);
-  if (balance.lt(DISPENSE_AMOUNT)) {
+  // Note: Using native BigInt comparison (<) instead of deprecated v5 .lt() method
+  // ethers.js v6 returns BigInt values which support native comparison operators
+  if (balance < DISPENSE_AMOUNT) {
     return res.status(500).json({ message: 'Faucet out of funds.' });
   }
 

@@ -1,0 +1,47 @@
+# Labeler configuration for automatic PR labeling
+# See: https://github.com/actions/labeler
+
+# Documentation changes
+documentation:
+  - changed-files:
+    - any-glob-to-any-file: ['**/*.md', 'LICENSE', 'CODEOWNERS']
+
+# GitHub Actions/Workflow changes
+github-actions:
+  - changed-files:
+    - any-glob-to-any-file: ['.github/workflows/**', '.github/*.yml', '.github/*.yaml']
+
+# Source code changes
+source:
+  - changed-files:
+    - any-glob-to-any-file: ['src/**/*']
+
+# Test changes
+tests:
+  - changed-files:
+    - any-glob-to-any-file: ['**/test*.js', 'examples/**/*']
+
+# Build/Configuration changes
+build:
+  - changed-files:
+    - any-glob-to-any-file: ['build.js', 'webpack.config.js', 'Dockerfile']
+
+# JavaScript changes
+javascript:
+  - changed-files:
+    - any-glob-to-any-file: ['**/*.js']
+
+# Dependencies changes
+dependencies:
+  - changed-files:
+    - any-glob-to-any-file: ['package.json', 'package-lock.json', 'yarn.lock']
+
+# Smart contracts/Ethereum related
+ethereum:
+  - changed-files:
+    - any-glob-to-any-file: ['**/*contract*.js', '**/*faucet*.js', '**/*gitpoap*.js', '**/*verify*.js', 'ethscab']
+
+# Security related
+security:
+  - changed-files:
+    - any-glob-to-any-file: ['SECURITY*.md', '.env.example', 'CODEOWNERS']

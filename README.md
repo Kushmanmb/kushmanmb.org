@@ -2,7 +2,8 @@
 
 A slot machine game with performance optimizations and Ethereum testnet integration.
 
-> **Note**: For ownership and attribution information, see [OWNERSHIP.md](OWNERSHIP.md)
+> **Note**: For ownership and attribution information, see [OWNERSHIP.md](OWNERSHIP.md)  
+> **Creator Attribution**: See [CREATOR_ATTRIBUTION.md](CREATOR_ATTRIBUTION.md) for ENS-authenticated ownership claims
 
 ## Documentation
 
@@ -144,7 +145,35 @@ const encoded = encodeConstructorArgs(
 console.log(encoded); // Use this value for --constructor-args
 ```
 
+### Security Features
+
+The contract verification tool implements the following security best practices:
+
+1. **API Key Protection**
+   - API keys are transmitted via POST request body, never in URL query parameters
+   - Prevents API key exposure in browser history, server logs, and HTTP referrer headers
+   - API keys are automatically validated and sanitized (trimmed, alphanumeric check)
+
+2. **Input Validation**
+   - Contract addresses validated using ethers.js `isAddress()` 
+   - Constructor arguments validated for proper hex format and ABI encoding
+   - Optimization settings validated (must be 0 or 1)
+   - Compiler version and other parameters validated
+
+3. **Error Message Sanitization**
+   - Error messages are sanitized to prevent information leakage
+   - Only safe error patterns are exposed to users
+   - Internal API details are not revealed in error messages
+
+4. **Environment Variable Security**
+   - API keys loaded from `.env` file (not hardcoded)
+   - `.env` file is gitignored to prevent accidental commits
+   - `.env.example` provided as a template
+
+For a complete example demonstrating safe verification practices, see `examples/verify-0xe67c465.js`.
+
 ### Programmatic Usage
+
 
 You can also use the verification tool as a module in your Node.js scripts:
 
@@ -168,6 +197,50 @@ if (result.success) {
   console.error('Failed:', result.error);
 }
 ```
+
+## GitPOAP Fetching
+
+This repository includes a tool to fetch GitPOAPs for a given Ethereum address. GitPOAP is a service that issues NFT badges (POAPs - Proof of Attendance Protocol) to GitHub contributors.
+
+### Usage
+
+Fetch GitPOAPs for an address:
+```bash
+npm run fetch-gitpoap -- --address 0x1234567890abcdef1234567890abcdef12345678
+```
+
+Or run directly:
+```bash
+node fetch-gitpoap.js --address 0x1234567890abcdef1234567890abcdef12345678
+```
+
+### Command Line Options
+
+- `--address` - Ethereum address to fetch GitPOAPs for (required)
+- `--help`, `-h` - Show help message
+
+### Programmatic Usage
+
+You can also use the GitPOAP fetcher as a module in your Node.js scripts:
+
+```javascript
+const { fetchGitPOAPs } = require('./fetch-gitpoap.js');
+
+const result = await fetchGitPOAPs({
+  address: '0x1234567890abcdef1234567890abcdef12345678',
+});
+
+if (result.success) {
+  console.log(`Found ${result.count} GitPOAP(s)`);
+  result.gitpoaps.forEach(poap => {
+    console.log(`- ${poap.gitPoapEventName}`);
+  });
+} else {
+  console.error('Failed:', result.error);
+}
+```
+
+For a complete example, see `examples/fetch-gitpoap-example.js`.
 
 ## USDC Faucet Server
 
@@ -286,7 +359,16 @@ This repository uses GitHub Actions for continuous integration:
 
 ## Ownership
 
-For information about project ownership, component attribution, and licensing, please see [OWNERSHIP.md](OWNERSHIP.md).
+For information about project ownership, component attribution, ENS domain authentication, and licensing, please see:
+- [OWNERSHIP.md](OWNERSHIP.md) - Basic ownership information
+- [CREATOR_ATTRIBUTION.md](CREATOR_ATTRIBUTION.md) - Comprehensive creator attribution with ENS verification
+
+### ENS Domains
+
+Official ENS domains for identity verification:
+- kushmanmb.eth
+- kushmanmb.base.eth
+- yaketh.eth
 
 Code ownership is managed through the [CODEOWNERS](CODEOWNERS) file.
 

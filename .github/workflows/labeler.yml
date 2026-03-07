@@ -1,0 +1,41 @@
+name: Pull Request Labeler
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# Security: Restrict permissions to minimum required
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  label:
+    name: Label Pull Request
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+    - name: Validate Repository Owner
+      run: |
+        ALLOWED_OWNERS=("kushmanmb-org" "kushmanmb")
+        REPO_OWNER="${{ github.repository_owner }}"
+        
+        if [[ ! " ${ALLOWED_OWNERS[@]} " =~ " ${REPO_OWNER} " ]]; then
+          echo "❌ Error: This workflow can only run in repositories owned by: ${ALLOWED_OWNERS[@]}"
+          echo "Current repository owner: ${REPO_OWNER}"
+          exit 1
+        fi
+        echo "✓ Repository owner validation passed: ${REPO_OWNER}"
+
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+
+    - name: Run Labeler
+      uses: actions/labeler@v5
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        configuration-path: .github/labeler.yml
+        sync-labels: true

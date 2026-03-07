@@ -178,26 +178,41 @@ recovery-phrase.txt
 passwords.txt
 *password*.txt
 
-# Archive files (build artifacts, backups, distributions)
-*.zip
-*.tar
-*.tar.gz
-*.tgz
-*.tar.bz2
-*.tbz2
-*.tar.xz
-*.txz
-*.rar
-*.7z
-*.gz
-*.bz2
-*.xz
-*.Z
+# Bitcoin and cryptocurrency wallets
+*.wallet.dat
+wallet.dat
+bitcoin-wallet/
+.bitcoin/
+bitcoin.conf
+*bitcoin-private*
+btc-wallet/
+*.btc
+bitcoin-keys/
+cryptocurrency-wallets/
+crypto-keys/
 
-# Docker-related temporary files
-docker-compose.override.yml
-.dockerignore.local
-*.dockerfile.local
+# ENS and domain management
+ens-config.json
+ens-private.json
+*-ens-key*
+ens-signing-key*
+domain-keys/
+.ens-cache/
+ens-credentials/
 
-# Fleeing 5-0 directory (contains unzipped build artifacts)
-Fleeing 5-0/
+# Hardware wallet and signing devices
+ledger/
+trezor/
+*.ledger
+*.trezor
+signing-devices/
+
+# Mnemonic phrases and seed phrases
+mnemonic*.txt
+seed-phrase*.txt
+recovery-phrase*.txt
+*-mnemonic.txt
+*-seed-phrase.txt
+12-word*.txt
+24-word*.txt
+bip39*.txt

@@ -1,6 +1,10 @@
 require('dotenv').config();
 const https = require('https');
 const { ethers } = require('ethers');
+const { validateOwner } = require('./validate-owner');
+
+// Validate repository owner before proceeding
+validateOwner({ silent: false });
 
 // Network configurations
 const NETWORKS = {
@@ -63,6 +67,27 @@ async function verifyContract(options) {
     throw new Error('Etherscan API key is required. Set ETHERSCAN_API_KEY environment variable.');
   }
   
+  // Sanitize and validate API key
+  const sanitizedApiKey = apiKey.trim();
+  if (sanitizedApiKey.length === 0) {
+    throw new Error('Etherscan API key cannot be empty');
+  }
+  if (!/^[a-zA-Z0-9]+$/.test(sanitizedApiKey)) {
+    throw new Error('Etherscan API key contains invalid characters. API keys should only contain alphanumeric characters.');
+  }
+  
+  // Validate constructor arguments format if provided
+  if (constructorArguments && constructorArguments.length > 0) {
+    // Constructor arguments should be hex string without 0x prefix
+    if (!/^[0-9a-fA-F]*$/.test(constructorArguments)) {
+      throw new Error('Constructor arguments must be a valid hex string without 0x prefix');
+    }
+    // Constructor arguments must be a multiple of 64 characters (32 bytes)
+    if (constructorArguments.length % 64 !== 0) {
+      throw new Error('Constructor arguments must be properly ABI-encoded (length must be multiple of 64 hex characters)');
+    }
+  }
+  
   // Validate optimization settings
   if (optimizationUsed !== 0 && optimizationUsed !== 1) {
     throw new Error('optimizationUsed must be 0 (disabled) or 1 (enabled)');
@@ -83,7 +108,7 @@ async function verifyContract(options) {
 
   // Prepare verification request data
   const postData = new URLSearchParams({
-    apikey: apiKey,
+    apikey: sanitizedApiKey,
     module: 'contract',
     action: 'verifysourcecode',
     contractaddress: contractAddress,
@@ -104,7 +129,8 @@ async function verifyContract(options) {
     const submitResult = await makeRequest(apiUrl, postData);
     
     if (submitResult.status !== '1') {
-      throw new Error(`Verification submission failed: ${submitResult.result}`);
+      const sanitizedError = sanitizeErrorMessage(submitResult.result);
+      throw new Error(`Verification submission failed: ${sanitizedError}`);
     }
 
     const guid = submitResult.result;
@@ -112,7 +138,7 @@ async function verifyContract(options) {
     console.log('Waiting for verification result...');
 
     // Poll for verification status
-    const verificationResult = await pollVerificationStatus(apiUrl, apiKey, guid);
+    const verificationResult = await pollVerificationStatus(apiUrl, sanitizedApiKey, guid);
     
     if (verificationResult.status === '1') {
       console.log('✓ Contract verified successfully!');
@@ -123,7 +149,8 @@ async function verifyContract(options) {
         explorerUrl: getExplorerUrl(network, contractAddress),
       };
     } else {
-      throw new Error(`Verification failed: ${verificationResult.result}`);
+      const sanitizedError = sanitizeErrorMessage(verificationResult.result);
+      throw new Error(`Verification failed: ${sanitizedError}`);
     }
   } catch (error) {
     console.error('✗ Verification failed:', error.message);
@@ -132,6 +159,45 @@ async function verifyContract(options) {
       error: error.message,
     };
   }
+}
+
+/**
+ * Sanitize error messages to prevent information leakage
+ * Removes sensitive details while preserving useful error information
+ * 
+ * @param {string} errorMessage - Raw error message from API
+ * @returns {string} - Sanitized error message
+ */
+function sanitizeErrorMessage(errorMessage) {
+  if (!errorMessage || typeof errorMessage !== 'string') {
+    return 'Unknown error occurred';
+  }
+
+  // Common error patterns that are safe to expose
+  const safeErrors = [
+    'Contract source code already verified',
+    'Unable to locate ContractCode',
+    'Invalid constructor arguments',
+    'Compilation failed',
+    'Contract creation code does not match',
+    'Pending in queue',
+    'Already Verified',
+    'Invalid API Key',
+    'rate limit',
+  ];
+
+  // Check if the error message contains a safe error pattern
+  const lowerError = errorMessage.toLowerCase();
+  for (const safeError of safeErrors) {
+    if (lowerError.includes(safeError.toLowerCase())) {
+      // Return the original error message if it matches safe patterns
+      return errorMessage;
+    }
+  }
+
+  // For unknown errors, return a generic message to avoid leaking internal details
+  // But include a hint about where to find more information
+  return 'Verification failed. Please check your contract details and try again. See Etherscan documentation for common issues.';
 }
 
 /**
@@ -176,29 +242,22 @@ function makeRequest(url, postData) {
 
 /**
  * Poll Etherscan API for verification status
+ * Uses POST instead of GET to avoid exposing API key in URL
  */
 async function pollVerificationStatus(apiUrl, apiKey, guid, maxAttempts = 30) {
   for (let i = 0; i < maxAttempts; i++) {
     await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3 seconds between polls
 
-    const statusUrl = `${apiUrl}?module=contract&action=checkverifystatus&guid=${guid}&apikey=${apiKey}`;
+    // Use POST instead of GET to keep API key out of URL
+    const postData = new URLSearchParams({
+      apikey: apiKey,
+      module: 'contract',
+      action: 'checkverifystatus',
+      guid: guid,
+    }).toString();
     
     try {
-      const response = await new Promise((resolve, reject) => {
-        https.get(statusUrl, (res) => {
-          let data = '';
-          res.on('data', (chunk) => {
-            data += chunk;
-          });
-          res.on('end', () => {
-            try {
-              resolve(JSON.parse(data));
-            } catch (error) {
-              reject(new Error(`Failed to parse response: ${data}`));
-            }
-          });
-        }).on('error', reject);
-      });
+      const response = await makeRequest(apiUrl, postData);
 
       // Check if verification is complete (success or failure)
       if (response.result !== 'Pending in queue') {
@@ -339,7 +398,8 @@ Environment Variables:
         options.constructorArguments = value;
         break;
       case 'api-key':
-        options.apiKey = value;
+        // Trim and validate API key
+        options.apiKey = value.trim();
         break;
     }
   }
