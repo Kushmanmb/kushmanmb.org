@@ -2,6 +2,14 @@
 // Ethereum Foundation Multisig Wallet
 // Original source: https://github.com/ethereum/dapp-bin/blob/master/wallet/wallet.sol
 // This is the contract that matches bytecode starting with 0x606060405236156100b9...
+//
+// WARNING: This is a HISTORICAL CONTRACT for verification purposes only.
+// DO NOT deploy this contract - it contains known security issues:
+// - Operator precedence issues with bitwise operations
+// - Unchecked low-level call return values  
+// - Potential reentrancy vulnerabilities
+// These issues cannot be fixed as the source must match the deployed bytecode exactly.
+// For new multisig wallets, use modern alternatives like Gnosis Safe.
 pragma solidity ^0.4.24;
 
 contract multiowned {
@@ -288,7 +296,7 @@ contract Wallet is multiowned, daylimit {
     // EVENTS
 
     // logged events:
-    //Ede - inass as a deposit of some amount of ether.
+    //Logged when ether is deposited into the wallet.
     event Deposit(address _from, uint value);
     // Ether was sent to someone.
     event SingleTransact(address owner, uint value, address to, bytes data);
