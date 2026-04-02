@@ -289,8 +289,9 @@ async function verifyOwnerAddress(options = {}) {
     }
 
     // Determine overall verification status
-    // Verified if address matches AND (ENS verification matches OR ENS verification was skipped)
     // When skipEnsVerification is true, ensVerification is null, so we only check addressMatch
+    // When ENS verification fails (ensVerification.matches is false), fullyVerified is false
+    // Setting ensMatches to true when skipped allows fullyVerified to reflect "address only" verification
     const ensMatches = skipEnsVerification ? true : (ensVerification ? ensVerification.matches : false);
     const fullyVerified = addressMatch && ensMatches;
 
@@ -305,7 +306,15 @@ async function verifyOwnerAddress(options = {}) {
         console.log(`ENS Reverse Resolution: ${ensMatches ? '✓ CONFIRMED' : '⚠ NOT CONFIRMED'}`);
       }
       console.log(`On-chain: ✓ Active address with ${txCount} transactions`);
-      console.log(`\nOverall Status: ${fullyVerified ? '✓ VERIFIED' : '⚠ PARTIALLY VERIFIED'}`);
+      
+      // Display appropriate overall status based on verification mode
+      let overallStatus;
+      if (fullyVerified) {
+        overallStatus = skipEnsVerification ? '✓ VERIFIED (address only)' : '✓ FULLY VERIFIED';
+      } else {
+        overallStatus = '⚠ VERIFICATION FAILED';
+      }
+      console.log(`\nOverall Status: ${overallStatus}`);
       console.log('\n' + '='.repeat(60));
     }
 
