@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fs = require('fs');
 const https = require('https');
 const { ethers } = require('ethers');
 const { validateOwner } = require('./validate-owner');
@@ -445,7 +446,6 @@ Environment Variables:
       const result = await fetchContractAbi(options);
       if (result.success) {
         if (outputFile) {
-          const fs = require('fs');
           fs.writeFileSync(outputFile, JSON.stringify(result.abi, null, 2));
           console.log(`\nABI saved to: ${outputFile}`);
         } else {
