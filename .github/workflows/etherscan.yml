@@ -1,0 +1,122 @@
+name: Etherscan Contract Operations
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to perform'
+        required: true
+        type: choice
+        options:
+          - fetch-abi
+          - check-verification
+      contract_address:
+        description: 'Contract address (0x...)'
+        required: true
+        type: string
+      network:
+        description: 'Network to use'
+        required: false
+        default: 'mainnet'
+        type: choice
+        options:
+          - mainnet
+          - sepolia
+          - holesky
+          - polygon
+          - amoy
+          - arbitrum
+          - optimism
+          - bsc
+          - bscTestnet
+
+# Security: Restrict permissions to minimum required
+permissions:
+  contents: read
+
+jobs:
+  etherscan-operation:
+    name: ${{ inputs.action == 'fetch-abi' && 'Fetch Contract ABI' || 'Check Verification Status' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+    - name: Validate Repository Owner
+      run: |
+        ALLOWED_OWNERS=("Kushmanmb")
+        REPO_OWNER="${{ github.repository_owner }}"
+        
+        if [[ ! " ${ALLOWED_OWNERS[@]} " =~ " ${REPO_OWNER} " ]]; then
+          echo "❌ Error: This workflow can only run in repositories owned by: ${ALLOWED_OWNERS[@]}"
+          echo "Current repository owner: ${REPO_OWNER}"
+          exit 1
+        fi
+        echo "✓ Repository owner validation passed: ${REPO_OWNER}"
+
+    - name: Validate Contract Address
+      run: |
+        ADDRESS="${{ inputs.contract_address }}"
+        if [[ ! "$ADDRESS" =~ ^0x[a-fA-F0-9]{40}$ ]]; then
+          echo "❌ Error: Invalid contract address format"
+          echo "Address must be a valid Ethereum address (0x followed by 40 hex characters)"
+          exit 1
+        fi
+        echo "✓ Contract address format validated: ${ADDRESS:0:10}...${ADDRESS: -4}"
+
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        cache-dependency-path: package-lock.json
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Validate API Key Secret
+      run: |
+        if [ -z "${{ secrets.ETHERSCAN_API_KEY }}" ]; then
+          echo "❌ Error: ETHERSCAN_API_KEY secret is not set"
+          echo "Please add your Etherscan API key to repository secrets"
+          exit 1
+        fi
+        echo "✓ ETHERSCAN_API_KEY secret is configured"
+
+    - name: Fetch Contract ABI
+      if: inputs.action == 'fetch-abi'
+      env:
+        ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
+      run: |
+        echo "Fetching ABI for contract ${{ inputs.contract_address }} on ${{ inputs.network }}..."
+        node fetch-contract-abi.js abi \
+          --address "${{ inputs.contract_address }}" \
+          --network "${{ inputs.network }}" \
+          --output contract-abi.json
+        
+        echo ""
+        echo "=== Contract ABI ==="
+        cat contract-abi.json
+
+    - name: Check Contract Verification
+      if: inputs.action == 'check-verification'
+      env:
+        ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
+      run: |
+        echo "Checking verification status for contract ${{ inputs.contract_address }} on ${{ inputs.network }}..."
+        node fetch-contract-abi.js verify \
+          --address "${{ inputs.contract_address }}" \
+          --network "${{ inputs.network }}"
+
+    - name: Upload ABI Artifact
+      if: inputs.action == 'fetch-abi'
+      uses: actions/upload-artifact@v4
+      with:
+        name: contract-abi-${{ inputs.network }}-${{ github.run_id }}
+        path: contract-abi.json
+        retention-days: 30
+        if-no-files-found: warn

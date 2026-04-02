@@ -20,10 +20,12 @@
     "test:gitpoap": "node test-fetch-gitpoap.js",
     "test:owner": "node test-validate-owner.js",
     "test:block-number": "node test-get-block-number.js",
+    "test:fetch-abi": "node test-fetch-contract-abi.js",
     "webpack": "webpack --mode production",
     "faucet": "node faucet.js",
     "verify": "node verify-contract.js",
     "verify:owner": "node verify-owner-address.js",
+    "fetch-abi": "node fetch-contract-abi.js",
     "fetch-gitpoap": "node fetch-gitpoap.js",
     "get-block-number": "node get-block-number.js"
   },
