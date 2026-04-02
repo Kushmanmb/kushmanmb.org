@@ -15,8 +15,18 @@ console.log('Running validate-owner tests...\n');
 console.log('Test 1: ALLOWED_OWNERS constant');
 assert(Array.isArray(validateOwnerModule.ALLOWED_OWNERS), 'ALLOWED_OWNERS should be an array');
 assert(validateOwnerModule.ALLOWED_OWNERS.length > 0, 'ALLOWED_OWNERS should not be empty');
-assert(validateOwnerModule.ALLOWED_OWNERS.includes('kushmanmb.eth'), 'Should include kushmanmb.eth');
+assert(validateOwnerModule.ALLOWED_OWNERS.includes('Kushmanmb'), 'Should include Kushmanmb');
 console.log('✓ ALLOWED_OWNERS contains expected values:', validateOwnerModule.ALLOWED_OWNERS.join(', '));
+
+// Test 1b: Owner Ethereum info
+console.log('\nTest 1b: Owner Ethereum info');
+assert(validateOwnerModule.OWNER_ETH_ADDRESS === '0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253', 'Should have correct owner ETH address');
+assert(validateOwnerModule.OWNER_ENS_NAME === 'kushmanmb.eth', 'Should have correct ENS name');
+const ethInfo = validateOwnerModule.getOwnerEthInfo();
+assert(ethInfo.ensName === 'kushmanmb.eth', 'getOwnerEthInfo should return correct ENS name');
+assert(ethInfo.address === '0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253', 'getOwnerEthInfo should return correct address');
+console.log('✓ Owner ETH Address:', validateOwnerModule.OWNER_ETH_ADDRESS);
+console.log('✓ Owner ENS Name:', validateOwnerModule.OWNER_ENS_NAME);
 
 // Test 2: getAllowedOwners function
 console.log('\nTest 2: getAllowedOwners function');
@@ -67,10 +77,10 @@ console.log('\nTest 6: validateOwner with GITHUB_REPOSITORY environment variable
 const originalGithubRepo = process.env.GITHUB_REPOSITORY;
 
 // Test with allowed owner
-process.env.GITHUB_REPOSITORY = 'kushmanmb.eth/test-repo';
+process.env.GITHUB_REPOSITORY = 'Kushmanmb/test-repo';
 let result = validateOwnerModule.validateOwner({ throwError: false, silent: true });
-assert(result === true, 'Should pass validation for kushmanmb.eth');
-console.log('✓ Validation passed for kushmanmb.eth owner');
+assert(result === true, 'Should pass validation for Kushmanmb');
+console.log('✓ Validation passed for Kushmanmb owner');
 
 // Test with unauthorized owner
 process.env.GITHUB_REPOSITORY = 'unauthorized-user/repo';

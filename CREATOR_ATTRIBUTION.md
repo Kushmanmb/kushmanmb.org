@@ -15,6 +15,15 @@ The following ENS domain is officially associated with this project and its crea
    - Ethereum mainnet registration
    - Verification: Resolve on Ethereum mainnet via ENS registry
 
+### Verified Ethereum Address
+
+**Owner Address**: `0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253`
+
+This address has been verified as the owner's address and can be authenticated via:
+- ENS resolution of kushmanmb.eth
+- Etherscan API verification
+- The `verify-owner-address.js` script in this repository
+
 ## Ownership Claims
 
 ### Project Ownership

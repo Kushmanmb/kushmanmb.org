@@ -11,7 +11,9 @@ This document summarizes the security improvements and verification methods for 
 This project implements strict owner validation to ensure scripts and workflows only run in authorized repositories. This prevents unauthorized use if the repository is forked or cloned by unauthorized parties.
 
 **Allowed Repository Owner**:
-- `kushmanmb.eth` (sole owner)
+- `Kushmanmb` (GitHub username)
+- Authenticated via: `kushmanmb.eth` (ENS domain)
+- Verified Address: `0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253`
 
 ### Implementation
 
@@ -22,7 +24,7 @@ Owner validation is implemented at two levels:
 All GitHub Actions workflows include a validation step that checks the repository owner before executing any code:
 
 ```bash
-ALLOWED_OWNERS=("kushmanmb.eth")
+ALLOWED_OWNERS=("Kushmanmb")
 REPO_OWNER="${{ github.repository_owner }}"
 
 if [[ ! " ${ALLOWED_OWNERS[@]} " =~ " ${REPO_OWNER} " ]]; then

@@ -9,6 +9,15 @@ This project is owned and maintained by **kushmanmb.eth** (GitHub: @Kushmanmb).
 Official ENS domain for identity verification:
 - **kushmanmb.eth** - Primary Ethereum mainnet identity (sole owner)
 
+### Verified Ethereum Address
+
+**Owner Address**: `0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253`
+
+This address is associated with kushmanmb.eth and can be verified:
+1. Using the `verify-owner-address.js` script in this repository
+2. Via ENS resolution on Ethereum mainnet
+3. Through Etherscan API verification
+
 For comprehensive ownership claims and verification methods, see [CREATOR_ATTRIBUTION.md](CREATOR_ATTRIBUTION.md).
 
 ## Repository Information

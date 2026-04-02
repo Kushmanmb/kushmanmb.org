@@ -4,10 +4,16 @@
  * This module provides functionality to validate that scripts are running
  * in repositories owned by authorized GitHub organizations/users.
  * 
- * Allowed owner: Kushmanmb (GitHub username), authenticated via kushmanmb.eth (ENS domain)
+ * Owner: kushmanmb.eth
+ * Verified Ethereum Address: 0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253
+ * GitHub Username: Kushmanmb
  */
 
 const ALLOWED_OWNERS = ['Kushmanmb'];
+
+// Verified owner Ethereum address
+const OWNER_ETH_ADDRESS = '0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253';
+const OWNER_ENS_NAME = 'kushmanmb.eth';
 
 /**
  * Get the repository owner from git config or environment
@@ -95,9 +101,23 @@ function getAllowedOwners() {
   return [...ALLOWED_OWNERS];
 }
 
+/**
+ * Get owner Ethereum information
+ * @returns {Object} Owner ENS name and verified address
+ */
+function getOwnerEthInfo() {
+  return {
+    ensName: OWNER_ENS_NAME,
+    address: OWNER_ETH_ADDRESS,
+  };
+}
+
 module.exports = {
   validateOwner,
   getRepositoryOwner,
   getAllowedOwners,
+  getOwnerEthInfo,
   ALLOWED_OWNERS,
+  OWNER_ETH_ADDRESS,
+  OWNER_ENS_NAME,
 };
