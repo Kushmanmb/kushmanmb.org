@@ -4,10 +4,10 @@
  * This module provides functionality to validate that scripts are running
  * in repositories owned by authorized GitHub organizations/users.
  * 
- * Allowed owner: kushmanmb.eth (GitHub: @Kushmanmb)
+ * Allowed owner: Kushmanmb (GitHub username), authenticated via kushmanmb.eth (ENS domain)
  */
 
-const ALLOWED_OWNERS = ['kushmanmb.eth'];
+const ALLOWED_OWNERS = ['Kushmanmb'];
 
 /**
  * Get the repository owner from git config or environment
