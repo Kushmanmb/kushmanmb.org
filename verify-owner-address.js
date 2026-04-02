@@ -20,6 +20,49 @@ const OWNER_CONFIG = {
 };
 
 /**
+ * Verify reverse resolution to confirm ownership
+ * Uses ENS reverse resolution to verify that an address resolves back to the expected ENS name
+ * @param {string} address - The Ethereum address to verify
+ * @param {string} expectedEnsName - The expected ENS name (e.g., 'kushmanmb.eth')
+ * @param {Object} options - Optional configuration
+ * @param {ethers.Provider} options.provider - Ethereum provider (defaults to mainnet)
+ * @param {boolean} options.verbose - Enable verbose logging (default: false)
+ * @returns {Promise<Object>} Verification result with name and match status
+ */
+async function verifyReverseResolution(address, expectedEnsName, options = {}) {
+  const {
+    provider = new ethers.JsonRpcProvider(
+      process.env.ETHEREUM_RPC_URL || 'https://ethereum-rpc.publicnode.com'
+    ),
+    verbose = false,
+  } = options;
+
+  // Normalize address for comparison
+  const normalizedAddress = ethers.getAddress(address);
+  
+  // Perform reverse resolution
+  const name = await provider.lookupAddress(normalizedAddress);
+  
+  if (verbose) {
+    if (name) {
+      console.log(`✓ Reverse ENS resolution: ${normalizedAddress} → ${name}`);
+    } else {
+      console.log(`⚠ No reverse ENS resolution found for ${normalizedAddress}`);
+    }
+  }
+  
+  // Compare with expected ENS name (case-insensitive)
+  const matches = name && name.toLowerCase() === expectedEnsName.toLowerCase();
+  
+  return {
+    address: normalizedAddress,
+    resolvedName: name,
+    expectedName: expectedEnsName,
+    matches,
+  };
+}
+
+/**
  * Make HTTPS GET request to Etherscan API
  * Uses POST to avoid exposing API key in URL
  */
@@ -130,6 +173,7 @@ async function verifyOwnerAddress(options = {}) {
     address = OWNER_CONFIG.verifiedAddress,
     apiKey = process.env.ETHERSCAN_API_KEY,
     verbose = true,
+    skipEnsVerification = false,
   } = options;
 
   if (!apiKey) {
@@ -170,6 +214,44 @@ async function verifyOwnerAddress(options = {}) {
     }
   }
 
+  // Perform ENS reverse resolution to confirm ownership
+  let ensVerification = null;
+  if (!skipEnsVerification) {
+    if (verbose) {
+      console.log('\nENS REVERSE RESOLUTION VERIFICATION:');
+      console.log('-'.repeat(40));
+    }
+    
+    try {
+      ensVerification = await verifyReverseResolution(
+        normalizedAddress,
+        OWNER_CONFIG.ensName,
+        { verbose }
+      );
+      
+      if (verbose) {
+        if (ensVerification.matches) {
+          console.log(`✓ Reverse resolution CONFIRMED: ${ensVerification.resolvedName}`);
+        } else if (ensVerification.resolvedName) {
+          console.log(`✗ Reverse resolution MISMATCH: expected ${OWNER_CONFIG.ensName}, got ${ensVerification.resolvedName}`);
+        } else {
+          console.log(`⚠ No reverse resolution record set for this address`);
+        }
+      }
+    } catch (error) {
+      if (verbose) {
+        console.log(`⚠ ENS verification skipped: ${error.message}`);
+      }
+      ensVerification = {
+        address: normalizedAddress,
+        resolvedName: null,
+        expectedName: OWNER_CONFIG.ensName,
+        matches: false,
+        error: error.message,
+      };
+    }
+  }
+
   // Get on-chain data from Etherscan
   if (verbose) {
     console.log('\nON-CHAIN VERIFICATION (via Etherscan API):');
@@ -206,25 +288,36 @@ async function verifyOwnerAddress(options = {}) {
       });
     }
 
+    // Determine overall verification status
+    // Verified if address matches AND (ENS verification matches OR ENS verification was skipped)
+    const ensMatches = ensVerification ? ensVerification.matches : true;
+    const fullyVerified = addressMatch && (skipEnsVerification || ensMatches);
+
     if (verbose) {
       console.log('\n' + '='.repeat(60));
       console.log('VERIFICATION SUMMARY');
       console.log('='.repeat(60));
       console.log(`\nOwner: ${OWNER_CONFIG.ensName}`);
       console.log(`Address: ${normalizedAddress}`);
-      console.log(`Status: ${addressMatch ? '✓ VERIFIED' : '✗ NOT VERIFIED'}`);
+      console.log(`Address Match: ${addressMatch ? '✓ VERIFIED' : '✗ NOT VERIFIED'}`);
+      if (!skipEnsVerification) {
+        console.log(`ENS Reverse Resolution: ${ensMatches ? '✓ CONFIRMED' : '⚠ NOT CONFIRMED'}`);
+      }
       console.log(`On-chain: ✓ Active address with ${txCount} transactions`);
+      console.log(`\nOverall Status: ${fullyVerified ? '✓ VERIFIED' : '⚠ PARTIALLY VERIFIED'}`);
       console.log('\n' + '='.repeat(60));
     }
 
     return {
       verified: addressMatch,
+      fullyVerified,
       owner: OWNER_CONFIG.ensName,
       address: normalizedAddress,
       expectedAddress: expectedAddress,
       balance: balanceEth,
       transactionCount: txCount,
       recentTransactions: recentTxs.length,
+      ensVerification: ensVerification || null,
     };
 
   } catch (error) {
@@ -270,6 +363,7 @@ Usage:
 Options:
   --address <addr>   Address to verify (default: owner's verified address)
   --api-key <key>    Etherscan API key (or set ETHERSCAN_API_KEY env var)
+  --skip-ens         Skip ENS reverse resolution verification
   --help, -h         Show this help message
 
 Owner Information:
@@ -277,12 +371,20 @@ Owner Information:
   Verified Address: ${OWNER_CONFIG.verifiedAddress}
   GitHub: @${OWNER_CONFIG.githubUsername}
 
+Verification Methods:
+  1. Address Match: Compares provided address with verified owner address
+  2. ENS Reverse Resolution: Confirms address resolves back to kushmanmb.eth
+  3. On-chain Verification: Validates address exists on Ethereum mainnet
+
 Examples:
-  # Verify the owner's address
+  # Verify the owner's address with full ENS verification
   node verify-owner-address.js
 
   # Verify a specific address
   node verify-owner-address.js --address 0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253
+
+  # Skip ENS verification (faster, uses only Etherscan)
+  node verify-owner-address.js --skip-ens
 `);
     process.exit(0);
   }
@@ -290,6 +392,7 @@ Examples:
   // Parse arguments
   let address = OWNER_CONFIG.verifiedAddress;
   let apiKey = process.env.ETHERSCAN_API_KEY;
+  let skipEnsVerification = false;
 
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--address' && args[i + 1]) {
@@ -298,11 +401,13 @@ Examples:
     } else if (args[i] === '--api-key' && args[i + 1]) {
       apiKey = args[i + 1];
       i++;
+    } else if (args[i] === '--skip-ens') {
+      skipEnsVerification = true;
     }
   }
 
   // Run verification
-  verifyOwnerAddress({ address, apiKey, verbose: true })
+  verifyOwnerAddress({ address, apiKey, verbose: true, skipEnsVerification })
     .then((result) => {
       process.exit(result.verified ? 0 : 1);
     })
@@ -315,6 +420,7 @@ Examples:
 // Export for programmatic use
 module.exports = {
   verifyOwnerAddress,
+  verifyReverseResolution,
   isOwnerAddress,
   getOwnerConfig,
   OWNER_CONFIG,
