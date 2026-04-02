@@ -278,12 +278,14 @@ async function runTests() {
   console.log('\nTest 8: Default network is mainnet');
   try {
     // We can't actually test this without making an API call,
-    // but we can verify the NETWORKS object has mainnet
+    // but we can verify the NETWORKS object has mainnet with correct URL structure
     if (!NETWORKS.mainnet) {
       throw new Error('mainnet network should be available');
     }
-    if (!NETWORKS.mainnet.includes('api.etherscan.io')) {
-      throw new Error('mainnet should point to api.etherscan.io');
+    // Use exact URL match for mainnet API endpoint (not substring check)
+    const expectedMainnetUrl = 'https://api.etherscan.io/api';
+    if (NETWORKS.mainnet !== expectedMainnetUrl) {
+      throw new Error(`mainnet should be ${expectedMainnetUrl}`);
     }
     console.log('✓ Default network configuration is correct');
     passed++;
