@@ -25,7 +25,7 @@ jobs:
     steps:
     - name: Validate Repository Owner
       run: |
-        ALLOWED_OWNERS=("kushmanmb-org" "kushmanmb")
+        ALLOWED_OWNERS=("kushmanmb.eth")
         REPO_OWNER="${{ github.repository_owner }}"
         
         if [[ ! " ${ALLOWED_OWNERS[@]} " =~ " ${REPO_OWNER} " ]]; then

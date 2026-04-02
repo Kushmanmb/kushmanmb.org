@@ -10,9 +10,8 @@ This document summarizes the security improvements and verification methods for 
 
 This project implements strict owner validation to ensure scripts and workflows only run in authorized repositories. This prevents unauthorized use if the repository is forked or cloned by unauthorized parties.
 
-**Allowed Repository Owners**:
-- `kushmanmb-org`
-- `kushmanmb`
+**Allowed Repository Owner**:
+- `kushmanmb.eth` (sole owner)
 
 ### Implementation
 
@@ -23,7 +22,7 @@ Owner validation is implemented at two levels:
 All GitHub Actions workflows include a validation step that checks the repository owner before executing any code:
 
 ```bash
-ALLOWED_OWNERS=("kushmanmb-org" "kushmanmb")
+ALLOWED_OWNERS=("kushmanmb.eth")
 REPO_OWNER="${{ github.repository_owner }}"
 
 if [[ ! " ${ALLOWED_OWNERS[@]} " =~ " ${REPO_OWNER} " ]]; then
@@ -69,11 +68,9 @@ The `validate-owner.js` module provides:
 
 ### ENS Domain Authentication
 
-This project uses Ethereum Name Service (ENS) domains for decentralized identity verification:
+This project uses Ethereum Name Service (ENS) domain for decentralized identity verification:
 
-- **kushmanmb.eth** - Primary Ethereum mainnet identity
-- **kushmanmb.base.eth** - Base L2 network identity  
-- **yaketh.eth** - Secondary Ethereum mainnet identity
+- **kushmanmb.eth** - Primary and sole Ethereum mainnet identity
 
 **Verification Methods**:
 1. On-chain ENS resolution via Ethereum mainnet
@@ -290,5 +287,5 @@ This update addresses **5 security vulnerabilities** ranging from CRITICAL to LO
 
 ---
 
-*Last Updated: 2026-02-13*
+*Last Updated: 2026-04-02*
 *Review Status: Passed automated code review and security scan*

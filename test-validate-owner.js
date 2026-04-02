@@ -15,8 +15,7 @@ console.log('Running validate-owner tests...\n');
 console.log('Test 1: ALLOWED_OWNERS constant');
 assert(Array.isArray(validateOwnerModule.ALLOWED_OWNERS), 'ALLOWED_OWNERS should be an array');
 assert(validateOwnerModule.ALLOWED_OWNERS.length > 0, 'ALLOWED_OWNERS should not be empty');
-assert(validateOwnerModule.ALLOWED_OWNERS.includes('kushmanmb-org'), 'Should include kushmanmb-org');
-assert(validateOwnerModule.ALLOWED_OWNERS.includes('kushmanmb'), 'Should include kushmanmb');
+assert(validateOwnerModule.ALLOWED_OWNERS.includes('kushmanmb.eth'), 'Should include kushmanmb.eth');
 console.log('✓ ALLOWED_OWNERS contains expected values:', validateOwnerModule.ALLOWED_OWNERS.join(', '));
 
 // Test 2: getAllowedOwners function
@@ -68,16 +67,10 @@ console.log('\nTest 6: validateOwner with GITHUB_REPOSITORY environment variable
 const originalGithubRepo = process.env.GITHUB_REPOSITORY;
 
 // Test with allowed owner
-process.env.GITHUB_REPOSITORY = 'kushmanmb-org/test-repo';
+process.env.GITHUB_REPOSITORY = 'kushmanmb.eth/test-repo';
 let result = validateOwnerModule.validateOwner({ throwError: false, silent: true });
-assert(result === true, 'Should pass validation for kushmanmb-org');
-console.log('✓ Validation passed for kushmanmb-org owner');
-
-// Test with another allowed owner
-process.env.GITHUB_REPOSITORY = 'kushmanmb/another-repo';
-result = validateOwnerModule.validateOwner({ throwError: false, silent: true });
-assert(result === true, 'Should pass validation for kushmanmb');
-console.log('✓ Validation passed for kushmanmb owner');
+assert(result === true, 'Should pass validation for kushmanmb.eth');
+console.log('✓ Validation passed for kushmanmb.eth owner');
 
 // Test with unauthorized owner
 process.env.GITHUB_REPOSITORY = 'unauthorized-user/repo';
