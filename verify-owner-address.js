@@ -289,11 +289,19 @@ async function verifyOwnerAddress(options = {}) {
     }
 
     // Determine overall verification status
-    // When skipEnsVerification is true, ensVerification is null, so we only check addressMatch
-    // When ENS verification fails (ensVerification.matches is false), fullyVerified is false
-    // Setting ensMatches to true when skipped allows fullyVerified to reflect "address only" verification
-    const ensMatches = skipEnsVerification ? true : (ensVerification ? ensVerification.matches : false);
-    const fullyVerified = addressMatch && ensMatches;
+    // ensCheckPassed is true if:
+    // 1. ENS verification was intentionally skipped (--skip-ens flag)
+    // 2. ENS verification was performed and the address resolves to the expected name
+    // ensCheckPassed is false if ENS verification was performed but failed
+    let ensCheckPassed;
+    if (skipEnsVerification) {
+      // ENS verification was skipped, treat as passed for "address only" mode
+      ensCheckPassed = true;
+    } else {
+      // ENS verification was attempted, use the actual result (or false if it failed)
+      ensCheckPassed = ensVerification?.matches ?? false;
+    }
+    const fullyVerified = addressMatch && ensCheckPassed;
 
     if (verbose) {
       console.log('\n' + '='.repeat(60));
@@ -303,7 +311,7 @@ async function verifyOwnerAddress(options = {}) {
       console.log(`Address: ${normalizedAddress}`);
       console.log(`Address Match: ${addressMatch ? '✓ VERIFIED' : '✗ NOT VERIFIED'}`);
       if (!skipEnsVerification) {
-        console.log(`ENS Reverse Resolution: ${ensMatches ? '✓ CONFIRMED' : '⚠ NOT CONFIRMED'}`);
+        console.log(`ENS Reverse Resolution: ${ensCheckPassed ? '✓ CONFIRMED' : '⚠ NOT CONFIRMED'}`);
       }
       console.log(`On-chain: ✓ Active address with ${txCount} transactions`);
       
