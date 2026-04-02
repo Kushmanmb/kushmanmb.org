@@ -290,8 +290,9 @@ async function verifyOwnerAddress(options = {}) {
 
     // Determine overall verification status
     // Verified if address matches AND (ENS verification matches OR ENS verification was skipped)
-    const ensMatches = ensVerification ? ensVerification.matches : true;
-    const fullyVerified = addressMatch && (skipEnsVerification || ensMatches);
+    // When skipEnsVerification is true, ensVerification is null, so we only check addressMatch
+    const ensMatches = skipEnsVerification ? true : (ensVerification ? ensVerification.matches : false);
+    const fullyVerified = addressMatch && ensMatches;
 
     if (verbose) {
       console.log('\n' + '='.repeat(60));
@@ -409,7 +410,8 @@ Examples:
   // Run verification
   verifyOwnerAddress({ address, apiKey, verbose: true, skipEnsVerification })
     .then((result) => {
-      process.exit(result.verified ? 0 : 1);
+      // Exit with 0 if fully verified (address match + ENS verification if enabled)
+      process.exit(result.fullyVerified ? 0 : 1);
     })
     .catch((error) => {
       console.error('Error:', error.message);
