@@ -2,14 +2,21 @@
 
 ## Project Ownership
 
-This project is owned and maintained by **kushmanmb** (GitHub: @Kushmanmb).
+This project is owned and maintained by **kushmanmb.eth** (GitHub: @Kushmanmb).
 
 ### ENS Domain Authentication
 
-Official ENS domains for identity verification:
-- **kushmanmb.eth** - Primary Ethereum mainnet identity
-- **kushmanmb.base.eth** - Base L2 network identity  
-- **yaketh.eth** - Secondary Ethereum mainnet identity
+Official ENS domain for identity verification:
+- **kushmanmb.eth** - Primary Ethereum mainnet identity (sole owner)
+
+### Verified Ethereum Address
+
+**Owner Address**: `0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253`
+
+This address is associated with kushmanmb.eth and can be verified:
+1. Using the `verify-owner-address.js` script in this repository
+2. Via ENS resolution on Ethereum mainnet
+3. Through Etherscan API verification
 
 For comprehensive ownership claims and verification methods, see [CREATOR_ATTRIBUTION.md](CREATOR_ATTRIBUTION.md).
 
@@ -85,7 +92,7 @@ For authorization to use or contribute to this project, please contact kushmanmb
 
 For questions about ownership, licensing, or contributions, please contact the project owner:
 - **GitHub**: @Kushmanmb
-- **ENS Domains**: kushmanmb.eth, kushmanmb.base.eth, or yaketh.eth
+- **ENS Domain**: kushmanmb.eth (sole owner)
 
 ## Disclaimer
 

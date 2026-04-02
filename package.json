@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Toolkit with multiplying capabilities, USDC faucet server, and Ethereum contract verification tools",
   "author": {
-    "name": "kushmanmb",
-    "ens": ["kushmanmb.eth", "kushmanmb.base.eth", "yaketh.eth"]
+    "name": "kushmanmb.eth",
+    "ens": "kushmanmb.eth",
+    "address": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253"
   },
   "homepage": "https://github.com/kushmanmb-org/kushmanmb.org",
   "repository": {
@@ -22,6 +23,7 @@
     "webpack": "webpack --mode production",
     "faucet": "node faucet.js",
     "verify": "node verify-contract.js",
+    "verify:owner": "node verify-owner-address.js",
     "fetch-gitpoap": "node fetch-gitpoap.js",
     "get-block-number": "node get-block-number.js"
   },
@@ -35,8 +37,7 @@
     "testnet",
     "gitpoap",
     "ens",
-    "kushmanmb.eth",
-    "yaketh.eth"
+    "kushmanmb.eth"
   ],
   "license": "UNLICENSED",
   "dependencies": {
