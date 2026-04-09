@@ -51,6 +51,22 @@ const lastRequestTimes = {};
 
 app.use(express.json());
 
+// GET endpoint to retrieve the current Ethereum block number
+app.get('/block-number', async (req, res) => {
+  try {
+    const blockNumber = await provider.getBlockNumber();
+    const blockNumberHex = '0x' + blockNumber.toString(16);
+    res.json({
+      jsonrpc: '2.0',
+      id: 83,
+      result: blockNumberHex,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching block number.' });
+  }
+});
+
 // GET endpoint to retrieve the faucet wallet address
 // This is safe to expose as it only returns the public address, not the private key
 app.get('/wallet', (req, res) => {
@@ -107,6 +123,7 @@ app.listen(port, () => {
   console.log(`Faucet server running at http://localhost:${port}`);
   console.log(`Faucet wallet address: ${wallet.address}`);
   console.log(`\nAvailable endpoints:`);
+  console.log(`  GET  /block-number - Get current Ethereum block number`);
   console.log(`  GET  /wallet  - View faucet wallet address`);
   console.log(`  POST /faucet  - Request USDC tokens`);
 });

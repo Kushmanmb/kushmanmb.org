@@ -2,39 +2,37 @@
 
 ## Identity Declaration
 
-This document serves as a formal announcement of ownership and creator status for this project and associated works, authenticated through multiple Ethereum Name Service (ENS) domains.
+This document serves as a formal announcement of ownership and creator status for this project and associated works, authenticated through Ethereum Name Service (ENS) domain.
 
 ## ENS Domain Authentication
 
-The following ENS domains are officially associated with this project and its creator:
+The following ENS domain is officially associated with this project and its creator:
 
-### Primary ENS Domains
+### Primary ENS Domain
 
 1. **kushmanmb.eth**
-   - Primary ENS identity
+   - Primary and sole ENS identity
    - Ethereum mainnet registration
    - Verification: Resolve on Ethereum mainnet via ENS registry
 
-2. **kushmanmb.base.eth**
-   - Base L2 network identity
-   - Base chain registration
-   - Verification: Resolve on Base network via ENS registry
-   - Funding: Listed in `.github/FUNDING.yml`
+### Verified Ethereum Address
 
-3. **yaketh.eth**
-   - Secondary ENS identity
-   - Ethereum mainnet registration
-   - Verification: Resolve on Ethereum mainnet via ENS registry
+**Owner Address**: `0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253`
+
+This address has been verified as the owner's address and can be authenticated via:
+- ENS resolution of kushmanmb.eth
+- Etherscan API verification
+- The `verify-owner-address.js` script in this repository
 
 ## Ownership Claims
 
 ### Project Ownership
 
-This repository and all associated works are owned and created by **kushmanmb**, as authenticated through the ENS domains listed above.
+This repository and all associated works are owned and created by **kushmanmb.eth**, as authenticated through the ENS domain listed above.
 
 **Repository**: kushmanmb-org/kushmanmb.org
-**Creator**: kushmanmb
-**ENS Identities**: kushmanmb.eth, kushmanmb.base.eth, yaketh.eth
+**Creator**: kushmanmb.eth
+**ENS Identity**: kushmanmb.eth
 
 ### Intellectual Property Rights
 
@@ -48,11 +46,9 @@ To verify ownership and authenticity:
 
 1. **ENS Resolution**
    ```bash
-   # Resolve ENS names to Ethereum addresses
+   # Resolve ENS name to Ethereum address
    # Using ethers.js or web3.js
-   const address1 = await provider.resolveName("kushmanmb.eth");
-   const address2 = await provider.resolveName("kushmanmb.base.eth");
-   const address3 = await provider.resolveName("yaketh.eth");
+   const address = await provider.resolveName("kushmanmb.eth");
    ```
 
 2. **Reverse Resolution**
@@ -128,9 +124,9 @@ To cryptographically verify ownership claims:
 
 This document serves as a **global, public announcement** of:
 
-- **Ownership**: kushmanmb owns this project and associated works
-- **Identity**: Authenticated through kushmanmb.eth, kushmanmb.base.eth, and yaketh.eth
-- **Attribution**: All original work attributed to kushmanmb
+- **Ownership**: kushmanmb.eth owns this project and associated works
+- **Identity**: Authenticated through kushmanmb.eth
+- **Attribution**: All original work attributed to kushmanmb.eth
 - **Rights**: All rights reserved under proprietary license
 - **Contact**: Reach out via GitHub or ENS-associated addresses
 
@@ -142,18 +138,18 @@ As stated in the [LICENSE](LICENSE) file:
 
 For authorization requests:
 - Contact via GitHub: @Kushmanmb
-- Contact via ENS domains: kushmanmb.eth, kushmanmb.base.eth, or yaketh.eth
+- Contact via ENS domain: kushmanmb.eth
 
 ## Legal Notice
 
 This document constitutes an official ownership and attribution statement. All claims are made in good faith and are verifiable through on-chain data and public GitHub records.
 
-**Copyright © 2024-2026 kushmanmb. All rights reserved.**
+**Copyright © 2024-2026 kushmanmb.eth. All rights reserved.**
 
 ---
 
-*Document Version*: 1.0.0  
-*Last Updated*: 2026-02-13  
+*Document Version*: 1.0.1  
+*Last Updated*: 2026-04-02  
 *Status*: Active  
-*Blockchain Networks*: Ethereum Mainnet, Base L2  
+*Blockchain Networks*: Ethereum Mainnet  
 *Verification Status*: ENS Authenticated
