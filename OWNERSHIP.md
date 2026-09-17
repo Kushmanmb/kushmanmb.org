@@ -22,7 +22,7 @@ For comprehensive ownership claims and verification methods, see [CREATOR_ATTRIB
 
 ## Repository Information
 
-- **Repository**: [Kushmanmb/kywmahmb](https://github.com/Kushmanmb/kywmahmb)
+- **Repository**: [Kushmanmb/kushmanmb.org](https://github.com/Kushmanmb/kushmanmb.org)
 - **Original Name**: fleeing-5-0
 - **License**: Proprietary - Authorization Required (see LICENSE file)
 - **Author**: kushmanmb
@@ -43,7 +43,7 @@ The core slot machine game ("Fleeing 5-0") is an original creation by kushmanmb,
 - **Purpose**: Dispenses USDC tokens on Ethereum testnet (Sepolia)
 - **Technology**: 
   - Express.js server
-  - ethers.js v5 for Ethereum interaction
+  - ethers.js v6 for Ethereum interaction
   - Infura provider for blockchain connectivity
 
 **Note**: This faucet is designed for testnet use only. The smart contracts it interacts with are on Ethereum testnets, not mainnet.
@@ -59,12 +59,12 @@ The core slot machine game ("Fleeing 5-0") is an original creation by kushmanmb,
 This project uses the following third-party libraries:
 
 ### Production Dependencies
-- **ethers** (v5.7.2): Ethereum wallet and contract interaction
-- **express** (v4.18.2): Web server framework
-- **dotenv** (v16.3.1): Environment variable management
+- **ethers** (v6.17.0): Ethereum wallet and contract interaction
+- **express** (v4.22.3): Web server framework
+- **dotenv** (v16.6.1): Environment variable management
 
 ### Development Dependencies
-- **webpack** (v5.89.0): Module bundler
+- **webpack** (v5.111.0): Module bundler
 - **webpack-cli** (v5.1.4): Webpack command-line interface
 
 ## External Services
