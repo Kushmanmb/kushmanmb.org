@@ -30,7 +30,7 @@ This address has been verified as the owner's address and can be authenticated v
 
 This repository and all associated works are owned and created by **kushmanmb.eth**, as authenticated through the ENS domain listed above.
 
-**Repository**: kushmanmb-org/kushmanmb.org
+**Repository**: Kushmanmb/kushmanmb.org
 **Creator**: kushmanmb.eth
 **ENS Identity**: kushmanmb.eth
 
@@ -64,7 +64,7 @@ To verify ownership and authenticity:
 ### GitHub Verification
 
 - **GitHub Username**: @Kushmanmb
-- **Repository**: https://github.com/kushmanmb-org/kushmanmb.org
+- **Repository**: https://github.com/Kushmanmb/kushmanmb.org
 - **CODEOWNERS**: All code owned by @Kushmanmb (see [CODEOWNERS](CODEOWNERS))
 
 ### Funding Verification

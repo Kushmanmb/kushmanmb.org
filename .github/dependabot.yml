@@ -5,7 +5,7 @@
 
 version: 2
 updates:
-  - package-ecosystem: "package.json" # See documentation for possible values
-    directory: "/kushmanmb" # Location of package manifests
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
       interval: "daily"

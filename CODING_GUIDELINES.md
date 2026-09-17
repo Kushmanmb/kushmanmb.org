@@ -13,7 +13,7 @@
 
 ## Introduction
 
-This document outlines the coding standards and best practices for the kywmahmb project. Following these guidelines ensures code consistency, maintainability, and quality across the codebase.
+This document outlines the coding standards and best practices for the kushmanmb.org project. Following these guidelines ensures code consistency, maintainability, and quality across the codebase.
 
 ### Goals
 - Write clean, readable, and maintainable code
