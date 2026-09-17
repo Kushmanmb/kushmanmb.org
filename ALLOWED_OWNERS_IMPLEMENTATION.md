@@ -6,7 +6,12 @@ This document describes the implementation of the `ALLOWED_OWNERS` security feat
 
 ## Problem Statement
 
-The requirement was to implement `ALLOWED_OWNERS=("kushmanmb-org" "kushmanmb")` to ensure that the repository's scripts and workflows can only be executed in repositories owned by these specific GitHub organizations/users.
+The requirement was to implement `ALLOWED_OWNERS=("Kushmanmb")` to ensure that the repository's scripts and workflows can only be executed in repositories owned by this specific GitHub user (authenticated via kushmanmb.eth ENS domain).
+
+**Owner Configuration:**
+- GitHub Username: `Kushmanmb`
+- ENS Domain: `kushmanmb.eth`
+- Verified Address: `0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253`
 
 ## Solution
 
@@ -17,7 +22,7 @@ All GitHub Actions workflows now include an owner validation step as the first s
 ```bash
 - name: Validate Repository Owner
   run: |
-    ALLOWED_OWNERS=("kushmanmb-org" "kushmanmb")
+    ALLOWED_OWNERS=("Kushmanmb")
     REPO_OWNER="${{ github.repository_owner }}"
     
     if [[ ! " ${ALLOWED_OWNERS[@]} " =~ " ${REPO_OWNER} " ]]; then
@@ -42,7 +47,9 @@ Created a reusable validation module that provides:
 - `validateOwner(options)` - Validates repository owner, throws error by default
 - `getRepositoryOwner()` - Gets owner from environment or git config
 - `getAllowedOwners()` - Returns array of allowed owners
-- `ALLOWED_OWNERS` - Constant array: `['kushmanmb-org', 'kushmanmb']`
+- `ALLOWED_OWNERS` - Constant array: `['Kushmanmb']`
+- `OWNER_ETH_ADDRESS` - Verified Ethereum address: `0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253`
+- `OWNER_ENS_NAME` - ENS domain: `kushmanmb.eth`
 
 #### Features:
 - Supports both `GITHUB_REPOSITORY` environment variable (GitHub Actions)
@@ -92,7 +99,8 @@ Created comprehensive test suite: `test-validate-owner.js`
 - ✓ validateOwner with different options
 - ✓ Environment variable handling
 - ✓ Error throwing behavior
-- ✓ Authorized owner acceptance (kushmanmb-org, kushmanmb)
+- ✓ Authorized owner acceptance (Kushmanmb)
+- ✓ Owner ETH address verification (0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253)
 - ✓ Unauthorized owner rejection
 
 **Run Tests:**

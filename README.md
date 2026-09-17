@@ -1,4 +1,4 @@
-# kywmahmb
+# kushmanmb.org
 
 A slot machine game with performance optimizations and Ethereum testnet integration.
 
@@ -22,12 +22,12 @@ A slot machine game with performance optimizations and Ethereum testnet integrat
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Kushmanmb/kywmahmb.git
+git clone https://github.com/Kushmanmb/kushmanmb.org.git
 ```
 
 2. Navigate to the project directory:
 ```bash
-cd kywmahmb
+cd kushmanmb.org
 ```
 
 3. Install dependencies:

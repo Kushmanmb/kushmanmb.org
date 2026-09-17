@@ -2,20 +2,27 @@
 
 ## Project Ownership
 
-This project is owned and maintained by **kushmanmb** (GitHub: @Kushmanmb).
+This project is owned and maintained by **kushmanmb.eth** (GitHub: @Kushmanmb).
 
 ### ENS Domain Authentication
 
-Official ENS domains for identity verification:
-- **kushmanmb.eth** - Primary Ethereum mainnet identity
-- **kushmanmb.base.eth** - Base L2 network identity  
-- **yaketh.eth** - Secondary Ethereum mainnet identity
+Official ENS domain for identity verification:
+- **kushmanmb.eth** - Primary Ethereum mainnet identity (sole owner)
+
+### Verified Ethereum Address
+
+**Owner Address**: `0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253`
+
+This address is associated with kushmanmb.eth and can be verified:
+1. Using the `verify-owner-address.js` script in this repository
+2. Via ENS resolution on Ethereum mainnet
+3. Through Etherscan API verification
 
 For comprehensive ownership claims and verification methods, see [CREATOR_ATTRIBUTION.md](CREATOR_ATTRIBUTION.md).
 
 ## Repository Information
 
-- **Repository**: [Kushmanmb/kywmahmb](https://github.com/Kushmanmb/kywmahmb)
+- **Repository**: [Kushmanmb/kushmanmb.org](https://github.com/Kushmanmb/kushmanmb.org)
 - **Original Name**: fleeing-5-0
 - **License**: Proprietary - Authorization Required (see LICENSE file)
 - **Author**: kushmanmb
@@ -36,7 +43,7 @@ The core slot machine game ("Fleeing 5-0") is an original creation by kushmanmb,
 - **Purpose**: Dispenses USDC tokens on Ethereum testnet (Sepolia)
 - **Technology**: 
   - Express.js server
-  - ethers.js v5 for Ethereum interaction
+  - ethers.js v6 for Ethereum interaction
   - Infura provider for blockchain connectivity
 
 **Note**: This faucet is designed for testnet use only. The smart contracts it interacts with are on Ethereum testnets, not mainnet.
@@ -52,12 +59,12 @@ The core slot machine game ("Fleeing 5-0") is an original creation by kushmanmb,
 This project uses the following third-party libraries:
 
 ### Production Dependencies
-- **ethers** (v5.7.2): Ethereum wallet and contract interaction
-- **express** (v4.18.2): Web server framework
-- **dotenv** (v16.3.1): Environment variable management
+- **ethers** (v6.17.0): Ethereum wallet and contract interaction
+- **express** (v4.22.3): Web server framework
+- **dotenv** (v16.6.1): Environment variable management
 
 ### Development Dependencies
-- **webpack** (v5.89.0): Module bundler
+- **webpack** (v5.111.0): Module bundler
 - **webpack-cli** (v5.1.4): Webpack command-line interface
 
 ## External Services
@@ -85,7 +92,7 @@ For authorization to use or contribute to this project, please contact kushmanmb
 
 For questions about ownership, licensing, or contributions, please contact the project owner:
 - **GitHub**: @Kushmanmb
-- **ENS Domains**: kushmanmb.eth, kushmanmb.base.eth, or yaketh.eth
+- **ENS Domain**: kushmanmb.eth (sole owner)
 
 ## Disclaimer
 

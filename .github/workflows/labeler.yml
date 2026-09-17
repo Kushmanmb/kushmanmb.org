@@ -18,7 +18,7 @@ jobs:
     steps:
     - name: Validate Repository Owner
       run: |
-        ALLOWED_OWNERS=("kushmanmb-org" "kushmanmb")
+        ALLOWED_OWNERS=("Kushmanmb")
         REPO_OWNER="${{ github.repository_owner }}"
         
         if [[ ! " ${ALLOWED_OWNERS[@]} " =~ " ${REPO_OWNER} " ]]; then
@@ -34,8 +34,7 @@ jobs:
         persist-credentials: false
 
     - name: Run Labeler
-      uses: actions/labeler@v5
+      uses: actions/labeler@v6
       with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
         configuration-path: .github/labeler.yml
         sync-labels: true
