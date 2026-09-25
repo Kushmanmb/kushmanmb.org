@@ -1,4 +1,54 @@
-const symbols = ["PRISONER", "ROBBER", "COP", "BAR", "7", "CHERRY", "BELL"];
+const SYMBOLS = {
+  K: {
+    id: "K",
+    image: "/assets/symbols/symbol_k.png",
+    value: 10
+  },
+
+  Q: {
+    id: "Q",
+    image: "/assets/symbols/symbol_q.png",
+    value: 8
+  },
+
+  J: {
+    id: "J",
+    image: "/assets/symbols/symbol_j.png",
+    value: 6
+  },
+
+  BADGE: {
+    id: "BADGE",
+    image: "/assets/symbols/symbol_badge.png",
+    value: 0,
+    scatter: true
+  },
+
+  PRISONER: {
+    id: "PRISONER",
+    image: "/assets/symbols/symbol_prisoner.png",
+    value: 0
+  },
+
+  COP: {
+    id: "COP",
+    image: "/assets/symbols/symbol_cop.png",
+    value: 0
+  },
+
+  ROBBER: {
+    id: "ROBBER",
+    image: "/assets/symbols/symbol_robber.png",
+    value: 0
+  },
+
+  MASK: {
+    id: "MASK",
+    image: "/assets/symbols/symbol_mask.png",
+    value: 0
+  }
+};
+const symbols = Object.keys(SYMBOLS);
 
 const rows = 6;
 const cols = 5;
