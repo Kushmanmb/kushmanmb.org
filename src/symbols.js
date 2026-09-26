@@ -48,11 +48,12 @@
     },
 
     GOLD_BADGE: {
-      id: "gold_badge",
+      id: "GOLD_BADGE",
+      slug: "gold_badge",
       name: "Gold Badge",
       value: 8,
       type: "premium",
-      image: "assets/symbols/gold_badge.png",
+      image: "assets/symbols/symbol_gold_badge.png",
       paytable: {}
     },
 

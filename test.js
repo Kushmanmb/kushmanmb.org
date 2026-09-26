@@ -47,11 +47,12 @@ if (
 }
 
 if (
-  SYMBOLS.GOLD_BADGE.id === 'gold_badge' &&
+  SYMBOLS.GOLD_BADGE.id === 'GOLD_BADGE' &&
+  SYMBOLS.GOLD_BADGE.slug === 'gold_badge' &&
   SYMBOLS.GOLD_BADGE.name === 'Gold Badge' &&
   SYMBOLS.GOLD_BADGE.value === 8 &&
   SYMBOLS.GOLD_BADGE.type === 'premium' &&
-  SYMBOLS.GOLD_BADGE.image === 'assets/symbols/gold_badge.png' &&
+  SYMBOLS.GOLD_BADGE.image === 'assets/symbols/symbol_gold_badge.png' &&
   SYMBOL_KEYS.includes('GOLD_BADGE')
 ) {
   console.log('✓ Test 2: Gold badge symbol metadata');
