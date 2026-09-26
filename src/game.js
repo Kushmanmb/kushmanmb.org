@@ -15,30 +15,37 @@
     right: 4
   };
 
-  function checkBonusTrigger(board, bonusColumns = defaultBonusColumns) {
-    let prisonerOnLeft = false;
-    let robberOnRight = false;
-    let copInMiddle = false;
+  function findBonusRow(board, bonusColumns = defaultBonusColumns) {
+    const middleColumns = bonusColumns.middle;
 
     for (let i = 0; i < board.length; i++) {
       const row = board[i];
+      let copInMiddle = false;
 
-      if (row[bonusColumns.left] === "PRISONER") prisonerOnLeft = true;
-      if (row[bonusColumns.right] === "ROBBER") robberOnRight = true;
+      if (
+        row[bonusColumns.left] !== "PRISONER" ||
+        row[bonusColumns.right] !== "ROBBER"
+      ) {
+        continue;
+      }
 
-      for (let j = 0; j < bonusColumns.middle.length; j++) {
-        if (row[bonusColumns.middle[j]] === "COP") {
+      for (let j = 0; j < middleColumns.length; j++) {
+        if (row[middleColumns[j]] === "COP") {
           copInMiddle = true;
           break;
         }
       }
 
-      if (prisonerOnLeft && robberOnRight && copInMiddle) {
-        return true;
+      if (copInMiddle) {
+        return i;
       }
     }
 
-    return prisonerOnLeft && robberOnRight && copInMiddle;
+    return -1;
+  }
+
+  function checkBonusTrigger(board, bonusColumns = defaultBonusColumns) {
+    return findBonusRow(board, bonusColumns) !== -1;
   }
 
   function createGame() {
@@ -76,15 +83,20 @@
     const siren = new Audio("siren.mp3");
     const [middleColumnA, middleColumnB, middleColumnC] = BONUS_COLUMNS.middle;
 
-    function highlightBonusSymbols() {
+    function highlightBonusSymbols(winningRow) {
       for (let index = 0; index < cellElements.length; index++) {
         const cell = cellElements[index];
+        const row = Math.floor(index / cols);
         const col = index % cols;
         const text = cell.dataset.symbol;
         const isBonusColumn =
           col === middleColumnA ||
           col === middleColumnB ||
           col === middleColumnC;
+
+        if (row !== winningRow) {
+          continue;
+        }
 
         if (
           (col === BONUS_COLUMNS.left && text === "PRISONER") ||
@@ -102,10 +114,11 @@
 
       board = generateBoard(rows, cols, SYMBOL_KEYS);
       renderBoard(board, grid, cellElements);
+      const winningRow = findBonusRow(board, BONUS_COLUMNS);
 
-      if (checkBonusTrigger(board, BONUS_COLUMNS)) {
+      if (winningRow !== -1) {
         statusElement.textContent = "🚨 BONUS TRIGGERED!";
-        highlightBonusSymbols();
+        highlightBonusSymbols(winningRow);
         siren.currentTime = 0;
         siren.play();
       } else {
@@ -138,6 +151,7 @@
   }
 
   return {
+    findBonusRow,
     checkBonusTrigger,
     createGame,
     get game() {

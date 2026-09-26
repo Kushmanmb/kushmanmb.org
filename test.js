@@ -131,6 +131,23 @@ if (checkBonusTrigger(testBoard5)) {
   failed++;
 }
 
+const testBoardSplitRows = [
+  ["PRISONER", "K", "Q", "J", "MASK"],
+  ["Q", "J", "COP", "BADGE", "Q"],
+  ["J", "K", "Q", "J", "ROBBER"],
+  ["MASK", "Q", "J", "K", "BADGE"],
+  ["BADGE", "MASK", "K", "Q", "J"],
+  ["Q", "J", "MASK", "K", "BADGE"]
+];
+
+if (!checkBonusTrigger(testBoardSplitRows)) {
+  console.log('✓ Test 7: No trigger when bonus symbols are split across rows');
+  passed++;
+} else {
+  console.log('✗ Test 7: FAILED - Should not trigger across different rows');
+  failed++;
+}
+
 const customBonusColumns = {
   left: 1,
   middle: [2],
@@ -147,10 +164,27 @@ const testBoard6 = [
 ];
 
 if (checkBonusTrigger(testBoard6, customBonusColumns)) {
-  console.log('✓ Test 7: Bonus trigger with custom bonus columns');
+  console.log('✓ Test 8: Bonus trigger with custom bonus columns');
   passed++;
 } else {
-  console.log('✗ Test 7: FAILED - Should trigger with custom bonus columns');
+  console.log('✗ Test 8: FAILED - Should trigger with custom bonus columns');
+  failed++;
+}
+
+const testBoard7 = [
+  ["K", "PRISONER", "Q", "ROBBER", "J"],
+  ["Q", "J", "MASK", "BADGE", "Q"],
+  ["J", "K", "Q", "J", "MASK"],
+  ["MASK", "Q", "J", "K", "BADGE"],
+  ["BADGE", "MASK", "K", "Q", "J"],
+  ["Q", "J", "MASK", "K", "BADGE"]
+];
+
+if (!checkBonusTrigger(testBoard7, customBonusColumns)) {
+  console.log('✓ Test 9: No trigger with custom bonus columns when COP is missing');
+  passed++;
+} else {
+  console.log('✗ Test 9: FAILED - Should not trigger custom columns without COP');
   failed++;
 }
 
