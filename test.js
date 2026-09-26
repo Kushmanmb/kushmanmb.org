@@ -131,6 +131,29 @@ if (checkBonusTrigger(testBoard5)) {
   failed++;
 }
 
+const customBonusColumns = {
+  left: 1,
+  middle: [2],
+  right: 3
+};
+
+const testBoard6 = [
+  ["K", "PRISONER", "COP", "ROBBER", "J"],
+  ["Q", "J", "MASK", "BADGE", "Q"],
+  ["J", "K", "Q", "J", "MASK"],
+  ["MASK", "Q", "J", "K", "BADGE"],
+  ["BADGE", "MASK", "K", "Q", "J"],
+  ["Q", "J", "MASK", "K", "BADGE"]
+];
+
+if (checkBonusTrigger(testBoard6, customBonusColumns)) {
+  console.log('✓ Test 7: Bonus trigger with custom bonus columns');
+  passed++;
+} else {
+  console.log('✗ Test 7: FAILED - Should trigger with custom bonus columns');
+  failed++;
+}
+
 console.log(`\n${passed} passed, ${failed} failed\n`);
 
 if (failed > 0) {

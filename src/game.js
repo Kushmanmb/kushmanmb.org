@@ -46,9 +46,23 @@
       return null;
     }
 
-    const { SYMBOL_KEYS } = root.Fleeing59Symbols;
-    const { BONUS_COLUMNS } = root.Fleeing59Paylines;
-    const { generateBoard, renderBoard } = root.Fleeing59Reels;
+    const symbolsModule = root.Fleeing59Symbols;
+    const paylinesModule = root.Fleeing59Paylines;
+    const reelsModule = root.Fleeing59Reels;
+
+    if (!symbolsModule || !paylinesModule || !reelsModule) {
+      const statusElement = document.getElementById("status");
+
+      if (statusElement) {
+        statusElement.textContent = "Game failed to load required modules.";
+      }
+
+      return null;
+    }
+
+    const { SYMBOL_KEYS } = symbolsModule;
+    const { BONUS_COLUMNS } = paylinesModule;
+    const { generateBoard, renderBoard } = reelsModule;
 
     const rows = 6;
     const cols = 5;
@@ -60,13 +74,17 @@
     const statusElement = document.getElementById("status");
     const spinButton = document.getElementById("spin-btn");
     const siren = new Audio("siren.mp3");
+    const [middleColumnA, middleColumnB, middleColumnC] = BONUS_COLUMNS.middle;
 
     function highlightBonusSymbols() {
       for (let index = 0; index < cellElements.length; index++) {
         const cell = cellElements[index];
         const col = index % cols;
         const text = cell.dataset.symbol;
-        const isBonusColumn = BONUS_COLUMNS.middle.includes(col);
+        const isBonusColumn =
+          col === middleColumnA ||
+          col === middleColumnB ||
+          col === middleColumnC;
 
         if (
           (col === BONUS_COLUMNS.left && text === "PRISONER") ||
