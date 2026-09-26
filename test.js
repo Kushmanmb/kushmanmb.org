@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 // Simple test script to verify the JavaScript logic
 
-const symbols = ["PRISONER", "ROBBER", "COP", "BAR", "7", "CHERRY", "BELL"];
+const { SYMBOLS, SYMBOL_KEYS } = require('./src/symbols.js');
+const { checkBonusTrigger } = require('./src/game.js');
+
+const symbols = SYMBOL_KEYS;
 const rows = 6;
 const cols = 5;
 
@@ -19,112 +22,186 @@ function generateBoard() {
   return board;
 }
 
-// Optimized checkBonusTrigger function
-function checkBonusTrigger(board) {
-  let prisonerOnReel1 = false;
-  let robberOnReel5 = false;
-  let copInMiddle = false;
-  
-  for (let i = 0; i < board.length; i++) {
-    const row = board[i];
-    if (row[0] === "PRISONER") prisonerOnReel1 = true;
-    if (row[4] === "ROBBER") robberOnReel5 = true;
-    if (row[1] === "COP" || row[2] === "COP" || row[3] === "COP") copInMiddle = true;
-    
-    if (prisonerOnReel1 && robberOnReel5 && copInMiddle) return true;
-  }
-  
-  return prisonerOnReel1 && robberOnReel5 && copInMiddle;
-}
-
 // Test cases
 console.log('Running tests...\n');
 
 let passed = 0;
 let failed = 0;
 
-// Test case 1: Should trigger bonus
-const testBoard1 = [
-  ["PRISONER", "BAR", "COP", "7", "ROBBER"],
-  ["7", "CHERRY", "BELL", "BAR", "7"],
-  ["CHERRY", "BAR", "7", "CHERRY", "BELL"],
-  ["BELL", "7", "CHERRY", "BAR", "7"],
-  ["BAR", "CHERRY", "BELL", "7", "CHERRY"],
-  ["7", "BELL", "BAR", "CHERRY", "7"]
-];
-if (checkBonusTrigger(testBoard1)) {
-  console.log('✓ Test 1: Bonus trigger detection (positive case)');
+if (
+  SYMBOLS.K.paytable[5] === 10 &&
+  SYMBOLS.K.paytable[6] === 20 &&
+  SYMBOLS.K.paytable[7] === 50 &&
+  SYMBOLS.Q.paytable[5] === 8 &&
+  SYMBOLS.Q.paytable[6] === 16 &&
+  SYMBOLS.Q.paytable[7] === 40 &&
+  SYMBOLS.J.paytable[5] === 6 &&
+  SYMBOLS.J.paytable[6] === 12 &&
+  SYMBOLS.J.paytable[7] === 30
+) {
+  console.log('✓ Test 1: Symbol paytable replacement for K/Q/J');
   passed++;
 } else {
-  console.log('✗ Test 1: FAILED - Should trigger bonus');
+  console.log('✗ Test 1: FAILED - Incorrect K/Q/J paytable values');
+  failed++;
+}
+
+// Test case 1: Should trigger bonus
+const testBoard1 = [
+  ["PRISONER", "K", "COP", "Q", "ROBBER"],
+  ["Q", "J", "MASK", "BADGE", "Q"],
+  ["J", "K", "Q", "J", "MASK"],
+  ["MASK", "Q", "J", "K", "BADGE"],
+  ["BADGE", "MASK", "K", "Q", "J"],
+  ["Q", "J", "MASK", "K", "BADGE"]
+];
+if (checkBonusTrigger(testBoard1)) {
+  console.log('✓ Test 2: Bonus trigger detection (positive case)');
+  passed++;
+} else {
+  console.log('✗ Test 2: FAILED - Should trigger bonus');
   failed++;
 }
 
 // Test case 2: Should not trigger (no PRISONER)
 const testBoard2 = [
-  ["BAR", "BAR", "COP", "7", "ROBBER"],
-  ["7", "CHERRY", "BELL", "BAR", "7"],
-  ["CHERRY", "BAR", "7", "CHERRY", "BELL"],
-  ["BELL", "7", "CHERRY", "BAR", "7"],
-  ["BAR", "CHERRY", "BELL", "7", "CHERRY"],
-  ["7", "BELL", "BAR", "CHERRY", "7"]
+  ["K", "Q", "COP", "J", "ROBBER"],
+  ["Q", "J", "MASK", "BADGE", "Q"],
+  ["J", "K", "Q", "J", "MASK"],
+  ["MASK", "Q", "J", "K", "BADGE"],
+  ["BADGE", "MASK", "K", "Q", "J"],
+  ["Q", "J", "MASK", "K", "BADGE"]
 ];
 if (!checkBonusTrigger(testBoard2)) {
-  console.log('✓ Test 2: No trigger without PRISONER');
+  console.log('✓ Test 3: No trigger without PRISONER');
   passed++;
 } else {
-  console.log('✗ Test 2: FAILED - Should not trigger without PRISONER');
+  console.log('✗ Test 3: FAILED - Should not trigger without PRISONER');
   failed++;
 }
 
 // Test case 3: Should not trigger (no ROBBER)
 const testBoard3 = [
-  ["PRISONER", "BAR", "COP", "7", "7"],
-  ["7", "CHERRY", "BELL", "BAR", "7"],
-  ["CHERRY", "BAR", "7", "CHERRY", "BELL"],
-  ["BELL", "7", "CHERRY", "BAR", "7"],
-  ["BAR", "CHERRY", "BELL", "7", "CHERRY"],
-  ["7", "BELL", "BAR", "CHERRY", "7"]
+  ["PRISONER", "K", "COP", "Q", "J"],
+  ["Q", "J", "MASK", "BADGE", "Q"],
+  ["J", "K", "Q", "J", "MASK"],
+  ["MASK", "Q", "J", "K", "BADGE"],
+  ["BADGE", "MASK", "K", "Q", "J"],
+  ["Q", "J", "MASK", "K", "BADGE"]
 ];
 if (!checkBonusTrigger(testBoard3)) {
-  console.log('✓ Test 3: No trigger without ROBBER');
+  console.log('✓ Test 4: No trigger without ROBBER');
   passed++;
 } else {
-  console.log('✗ Test 3: FAILED - Should not trigger without ROBBER');
+  console.log('✗ Test 4: FAILED - Should not trigger without ROBBER');
   failed++;
 }
 
 // Test case 4: Should not trigger (no COP in middle)
 const testBoard4 = [
-  ["PRISONER", "BAR", "BAR", "7", "ROBBER"],
-  ["7", "CHERRY", "BELL", "BAR", "7"],
-  ["CHERRY", "BAR", "7", "CHERRY", "BELL"],
-  ["BELL", "7", "CHERRY", "BAR", "7"],
-  ["BAR", "CHERRY", "BELL", "7", "CHERRY"],
-  ["7", "BELL", "BAR", "CHERRY", "7"]
+  ["PRISONER", "K", "Q", "J", "ROBBER"],
+  ["Q", "J", "MASK", "BADGE", "Q"],
+  ["J", "K", "Q", "J", "MASK"],
+  ["MASK", "Q", "J", "K", "BADGE"],
+  ["BADGE", "MASK", "K", "Q", "J"],
+  ["Q", "J", "MASK", "K", "BADGE"]
 ];
 if (!checkBonusTrigger(testBoard4)) {
-  console.log('✓ Test 4: No trigger without COP in middle');
+  console.log('✓ Test 5: No trigger without COP in middle');
   passed++;
 } else {
-  console.log('✗ Test 4: FAILED - Should not trigger without COP');
+  console.log('✗ Test 5: FAILED - Should not trigger without COP');
   failed++;
 }
 
 // Test case 5: Should trigger with all conditions in last row
 const testBoard5 = [
-  ["BAR", "BAR", "BAR", "7", "7"],
-  ["7", "CHERRY", "BELL", "BAR", "7"],
-  ["CHERRY", "BAR", "7", "CHERRY", "BELL"],
-  ["BELL", "7", "CHERRY", "BAR", "7"],
-  ["BAR", "CHERRY", "BELL", "7", "CHERRY"],
-  ["PRISONER", "BELL", "COP", "CHERRY", "ROBBER"]
+  ["K", "Q", "J", "MASK", "BADGE"],
+  ["Q", "J", "MASK", "BADGE", "Q"],
+  ["J", "K", "Q", "J", "MASK"],
+  ["MASK", "Q", "J", "K", "BADGE"],
+  ["BADGE", "MASK", "K", "Q", "J"],
+  ["PRISONER", "J", "COP", "K", "ROBBER"]
 ];
 if (checkBonusTrigger(testBoard5)) {
-  console.log('✓ Test 5: Bonus trigger with all conditions in last row');
+  console.log('✓ Test 6: Bonus trigger with all conditions in last row');
   passed++;
 } else {
-  console.log('✗ Test 5: FAILED - Should trigger with all conditions');
+  console.log('✗ Test 6: FAILED - Should trigger with all conditions');
+  failed++;
+}
+
+const testBoardSplitRows = [
+  ["PRISONER", "K", "Q", "J", "MASK"],
+  ["Q", "J", "COP", "BADGE", "Q"],
+  ["J", "K", "Q", "J", "ROBBER"],
+  ["MASK", "Q", "J", "K", "BADGE"],
+  ["BADGE", "MASK", "K", "Q", "J"],
+  ["Q", "J", "MASK", "K", "BADGE"]
+];
+
+if (!checkBonusTrigger(testBoardSplitRows)) {
+  console.log('✓ Test 7: No trigger when bonus symbols are split across rows');
+  passed++;
+} else {
+  console.log('✗ Test 7: FAILED - Should not trigger across different rows');
+  failed++;
+}
+
+const customBonusColumns = {
+  left: 1,
+  middle: [2],
+  right: 3
+};
+
+const testBoard6 = [
+  ["K", "PRISONER", "COP", "ROBBER", "J"],
+  ["Q", "J", "MASK", "BADGE", "Q"],
+  ["J", "K", "Q", "J", "MASK"],
+  ["MASK", "Q", "J", "K", "BADGE"],
+  ["BADGE", "MASK", "K", "Q", "J"],
+  ["Q", "J", "MASK", "K", "BADGE"]
+];
+
+if (checkBonusTrigger(testBoard6, customBonusColumns)) {
+  console.log('✓ Test 8: Bonus trigger with custom bonus columns');
+  passed++;
+} else {
+  console.log('✗ Test 8: FAILED - Should trigger with custom bonus columns');
+  failed++;
+}
+
+const testBoard7 = [
+  ["K", "PRISONER", "Q", "ROBBER", "J"],
+  ["Q", "J", "MASK", "BADGE", "Q"],
+  ["J", "K", "Q", "J", "MASK"],
+  ["MASK", "Q", "J", "K", "BADGE"],
+  ["BADGE", "MASK", "K", "Q", "J"],
+  ["Q", "J", "MASK", "K", "BADGE"]
+];
+
+if (!checkBonusTrigger(testBoard7, customBonusColumns)) {
+  console.log('✓ Test 9: No trigger with custom bonus columns when COP is missing');
+  passed++;
+} else {
+  console.log('✗ Test 9: FAILED - Should not trigger custom columns without COP');
+  failed++;
+}
+
+const testBoard8 = [
+  ["K", "PRISONER", "Q", "J", "MASK"],
+  ["Q", "J", "COP", "BADGE", "Q"],
+  ["J", "K", "Q", "ROBBER", "MASK"],
+  ["MASK", "Q", "J", "K", "BADGE"],
+  ["BADGE", "MASK", "K", "Q", "J"],
+  ["Q", "J", "MASK", "K", "BADGE"]
+];
+
+if (!checkBonusTrigger(testBoard8, customBonusColumns)) {
+  console.log('✓ Test 10: No trigger with custom bonus columns across different rows');
+  passed++;
+} else {
+  console.log('✗ Test 10: FAILED - Should not trigger custom columns across rows');
   failed++;
 }
 

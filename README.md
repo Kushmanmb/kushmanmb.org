@@ -327,9 +327,22 @@ The code has been optimized with the following improvements:
 ## Project Structure
 
 ```
-fleeing-5-0/
-├── src/                 # Source files
-│   ├── main.js          # Main game logic
+Fleeing-5-9/
+├── assets/
+│   └── symbols/
+│       ├── symbol_k.png
+│       ├── symbol_q.png
+│       ├── symbol_j.png
+│       ├── symbol_badge.png
+│       ├── symbol_prisoner.png
+│       ├── symbol_cop.png
+│       ├── symbol_robber.png
+│       └── symbol_mask.png
+├── src/
+│   ├── symbols.js       # Symbol definitions and paytables
+│   ├── paylines.js      # Payline and bonus-column data
+│   ├── reels.js         # Board generation and rendering helpers
+│   ├── game.js          # Main game logic
 │   ├── index.html       # HTML structure
 │   ├── style.css        # Styles
 │   └── siren.mp3        # Sound effect
@@ -338,14 +351,16 @@ fleeing-5-0/
 ├── test.js              # Test suite
 ├── build.js             # Build script
 ├── webpack.config.js    # Webpack configuration
-└── package.json         # Project dependencies
+├── package.json         # Project dependencies
+├── README.md
+└── .gitignore
 ```
 
 ## Development
 
 To work on the project:
 
-1. Make changes to files in the `src/` directory
+1. Make changes to files in the `src/` and `assets/` directories
 2. Build the project with `npm run build`
 3. Run tests with `npm test` to verify functionality
 4. Open `dist/index.html` in a browser to test the game
