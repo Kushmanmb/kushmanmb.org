@@ -1,12 +1,7 @@
 {
   "name": "kushmanmb-org",
   "version": "1.0.0",
-  "description": "Toolkit with multiplying capabilities, USDC faucet server, and Ethereum contract verification tools",
-  "author": {
-    "name": "kushmanmb.eth",
-    "ens": "kushmanmb.eth",
-    "address": "0x6fb9e80dDd0f5DC99D7cB38b07e8b298A57bF253"
-  },
+  "description": "Fleeing 5-0 slot machine game",
   "homepage": "https://github.com/Kushmanmb/kushmanmb.org",
   "repository": {
     "type": "git",
@@ -15,36 +10,14 @@
   "scripts": {
     "build": "node build.js",
     "test": "node test.js",
-    "test:verify": "node test-verify.js",
-    "test:faucet": "node test-faucet.js",
-    "test:gitpoap": "node test-fetch-gitpoap.js",
-    "test:owner": "node test-validate-owner.js",
-    "test:block-number": "node test-get-block-number.js",
-    "webpack": "webpack --mode production",
-    "faucet": "node faucet.js",
-    "verify": "node verify-contract.js",
-    "verify:owner": "node verify-owner-address.js",
-    "fetch-gitpoap": "node fetch-gitpoap.js",
-    "get-block-number": "node get-block-number.js"
+    "webpack": "webpack --mode production"
   },
   "keywords": [
     "game",
-    "slot-machine",
-    "ethereum",
-    "faucet",
-    "contract-verification",
-    "usdc",
-    "testnet",
-    "gitpoap",
-    "ens",
-    "kushmanmb.eth"
+    "slot-machine"
   ],
   "license": "UNLICENSED",
-  "dependencies": {
-    "dotenv": "^18.0.2",
-    "ethers": "^6.17.0",
-    "express": "^5.2.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "webpack": "^5.111.0",
     "webpack-cli": "^7.2.3"
