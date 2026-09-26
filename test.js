@@ -46,6 +46,21 @@ if (
   failed++;
 }
 
+if (
+  SYMBOLS.GOLD_BADGE.id === 'gold_badge' &&
+  SYMBOLS.GOLD_BADGE.name === 'Gold Badge' &&
+  SYMBOLS.GOLD_BADGE.value === 8 &&
+  SYMBOLS.GOLD_BADGE.type === 'premium' &&
+  SYMBOLS.GOLD_BADGE.image === '/assets/symbols/gold_badge.png' &&
+  SYMBOL_KEYS.includes('GOLD_BADGE')
+) {
+  console.log('✓ Test 2: Gold badge symbol metadata');
+  passed++;
+} else {
+  console.log('✗ Test 2: FAILED - Incorrect gold badge metadata');
+  failed++;
+}
+
 // Test case 1: Should trigger bonus
 const testBoard1 = [
   ["PRISONER", "K", "COP", "Q", "ROBBER"],
@@ -56,10 +71,10 @@ const testBoard1 = [
   ["Q", "J", "MASK", "K", "BADGE"]
 ];
 if (checkBonusTrigger(testBoard1)) {
-  console.log('✓ Test 2: Bonus trigger detection (positive case)');
+  console.log('✓ Test 3: Bonus trigger detection (positive case)');
   passed++;
 } else {
-  console.log('✗ Test 2: FAILED - Should trigger bonus');
+  console.log('✗ Test 3: FAILED - Should trigger bonus');
   failed++;
 }
 
@@ -73,10 +88,10 @@ const testBoard2 = [
   ["Q", "J", "MASK", "K", "BADGE"]
 ];
 if (!checkBonusTrigger(testBoard2)) {
-  console.log('✓ Test 3: No trigger without PRISONER');
+  console.log('✓ Test 4: No trigger without PRISONER');
   passed++;
 } else {
-  console.log('✗ Test 3: FAILED - Should not trigger without PRISONER');
+  console.log('✗ Test 4: FAILED - Should not trigger without PRISONER');
   failed++;
 }
 
@@ -90,10 +105,10 @@ const testBoard3 = [
   ["Q", "J", "MASK", "K", "BADGE"]
 ];
 if (!checkBonusTrigger(testBoard3)) {
-  console.log('✓ Test 4: No trigger without ROBBER');
+  console.log('✓ Test 5: No trigger without ROBBER');
   passed++;
 } else {
-  console.log('✗ Test 4: FAILED - Should not trigger without ROBBER');
+  console.log('✗ Test 5: FAILED - Should not trigger without ROBBER');
   failed++;
 }
 
@@ -107,10 +122,10 @@ const testBoard4 = [
   ["Q", "J", "MASK", "K", "BADGE"]
 ];
 if (!checkBonusTrigger(testBoard4)) {
-  console.log('✓ Test 5: No trigger without COP in middle');
+  console.log('✓ Test 6: No trigger without COP in middle');
   passed++;
 } else {
-  console.log('✗ Test 5: FAILED - Should not trigger without COP');
+  console.log('✗ Test 6: FAILED - Should not trigger without COP');
   failed++;
 }
 
@@ -124,10 +139,10 @@ const testBoard5 = [
   ["PRISONER", "J", "COP", "K", "ROBBER"]
 ];
 if (checkBonusTrigger(testBoard5)) {
-  console.log('✓ Test 6: Bonus trigger with all conditions in last row');
+  console.log('✓ Test 7: Bonus trigger with all conditions in last row');
   passed++;
 } else {
-  console.log('✗ Test 6: FAILED - Should trigger with all conditions');
+  console.log('✗ Test 7: FAILED - Should trigger with all conditions');
   failed++;
 }
 
@@ -141,10 +156,10 @@ const testBoardSplitRows = [
 ];
 
 if (!checkBonusTrigger(testBoardSplitRows)) {
-  console.log('✓ Test 7: No trigger when bonus symbols are split across rows');
+  console.log('✓ Test 8: No trigger when bonus symbols are split across rows');
   passed++;
 } else {
-  console.log('✗ Test 7: FAILED - Should not trigger across different rows');
+  console.log('✗ Test 8: FAILED - Should not trigger across different rows');
   failed++;
 }
 
@@ -164,10 +179,10 @@ const testBoard6 = [
 ];
 
 if (checkBonusTrigger(testBoard6, customBonusColumns)) {
-  console.log('✓ Test 8: Bonus trigger with custom bonus columns');
+  console.log('✓ Test 9: Bonus trigger with custom bonus columns');
   passed++;
 } else {
-  console.log('✗ Test 8: FAILED - Should trigger with custom bonus columns');
+  console.log('✗ Test 9: FAILED - Should trigger with custom bonus columns');
   failed++;
 }
 
@@ -181,10 +196,10 @@ const testBoard7 = [
 ];
 
 if (!checkBonusTrigger(testBoard7, customBonusColumns)) {
-  console.log('✓ Test 9: No trigger with custom bonus columns when COP is missing');
+  console.log('✓ Test 10: No trigger with custom bonus columns when COP is missing');
   passed++;
 } else {
-  console.log('✗ Test 9: FAILED - Should not trigger custom columns without COP');
+  console.log('✗ Test 10: FAILED - Should not trigger custom columns without COP');
   failed++;
 }
 
@@ -198,10 +213,10 @@ const testBoard8 = [
 ];
 
 if (!checkBonusTrigger(testBoard8, customBonusColumns)) {
-  console.log('✓ Test 10: No trigger with custom bonus columns across different rows');
+  console.log('✓ Test 11: No trigger with custom bonus columns across different rows');
   passed++;
 } else {
-  console.log('✗ Test 10: FAILED - Should not trigger custom columns across rows');
+  console.log('✗ Test 11: FAILED - Should not trigger custom columns across rows');
   failed++;
 }
 

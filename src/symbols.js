@@ -47,6 +47,15 @@
       scatter: true
     },
 
+    GOLD_BADGE: {
+      id: "gold_badge",
+      name: "Gold Badge",
+      value: 8,
+      type: "premium",
+      image: "/assets/symbols/gold_badge.png",
+      paytable: {}
+    },
+
     PRISONER: {
       id: "PRISONER",
       image: "assets/symbols/symbol_prisoner.png",
