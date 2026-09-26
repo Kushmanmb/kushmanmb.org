@@ -40,7 +40,7 @@ function copyDirectory(source, destination) {
 }
 
 // Copy files
-const filesToCopy = ['index.html', 'style.css', 'siren.mp3'];
+const filesToCopy = ['index.html', 'style.css', 'siren.mp3', 'prisoner.js'];
 
 console.log('Building project...');
 
