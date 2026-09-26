@@ -53,12 +53,13 @@
       return null;
     }
 
+    const doc = root.document;
     const symbolsModule = root.Fleeing59Symbols;
     const paylinesModule = root.Fleeing59Paylines;
     const reelsModule = root.Fleeing59Reels;
 
     if (!symbolsModule || !paylinesModule || !reelsModule) {
-      const statusElement = root.document.getElementById("status");
+      const statusElement = doc.getElementById("status");
 
       if (statusElement) {
         statusElement.textContent = "Game failed to load required modules.";
@@ -77,10 +78,10 @@
     const cellElements = [];
     let isSpinning = false;
 
-    const grid = document.getElementById("slot-grid");
-    const statusElement = document.getElementById("status");
-    const spinButton = document.getElementById("spin-btn");
-    const siren = new Audio("siren.mp3");
+    const grid = doc.getElementById("slot-grid");
+    const statusElement = doc.getElementById("status");
+    const spinButton = doc.getElementById("spin-btn");
+    const siren = typeof root.Audio === "function" ? new root.Audio("siren.mp3") : null;
     const middleColumnLookup = Object.create(null);
 
     for (let i = 0; i < BONUS_COLUMNS.middle.length; i++) {
@@ -120,8 +121,10 @@
       if (winningRow !== -1) {
         statusElement.textContent = "🚨 BONUS TRIGGERED!";
         highlightBonusSymbols(winningRow);
-        siren.currentTime = 0;
-        siren.play();
+        if (siren) {
+          siren.currentTime = 0;
+          siren.play();
+        }
       } else {
         statusElement.textContent = "No bonus this spin.";
       }

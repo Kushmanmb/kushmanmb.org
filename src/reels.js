@@ -26,20 +26,22 @@
   }
 
   function renderBoard(board, grid, cellElements) {
+    const doc = grid.ownerDocument;
+
     while (grid.firstChild) {
       grid.removeChild(grid.firstChild);
     }
 
     cellElements.length = 0;
 
-    const fragment = document.createDocumentFragment();
+    const fragment = doc.createDocumentFragment();
 
     for (let r = 0; r < board.length; r++) {
       const row = board[r];
 
       for (let c = 0; c < row.length; c++) {
         const symbol = row[c];
-        const cell = document.createElement("div");
+        const cell = doc.createElement("div");
         cell.classList.add("cell");
         cell.textContent = symbol;
         cell.dataset.symbol = symbol;
