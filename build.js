@@ -56,11 +56,6 @@ filesToCopy.forEach(file => {
   }
 });
 
-// Copy .well-known directory
-const wellKnownSrcDir = path.join(sourceDir, '.well-known');
-const wellKnownDistDir = path.join(distDir, '.well-known');
-
-copyDirectory(wellKnownSrcDir, wellKnownDistDir);
 copyDirectory(assetsSourceDir, assetsDistDir);
 
 console.log('Bundling JavaScript with Webpack...');
