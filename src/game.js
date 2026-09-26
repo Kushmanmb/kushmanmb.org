@@ -58,7 +58,7 @@
     const reelsModule = root.Fleeing59Reels;
 
     if (!symbolsModule || !paylinesModule || !reelsModule) {
-      const statusElement = document.getElementById("status");
+      const statusElement = root.document.getElementById("status");
 
       if (statusElement) {
         statusElement.textContent = "Game failed to load required modules.";
@@ -81,7 +81,11 @@
     const statusElement = document.getElementById("status");
     const spinButton = document.getElementById("spin-btn");
     const siren = new Audio("siren.mp3");
-    const [middleColumnA, middleColumnB, middleColumnC] = BONUS_COLUMNS.middle;
+    const middleColumnLookup = Object.create(null);
+
+    for (let i = 0; i < BONUS_COLUMNS.middle.length; i++) {
+      middleColumnLookup[BONUS_COLUMNS.middle[i]] = true;
+    }
 
     function highlightBonusSymbols(winningRow) {
       for (let index = 0; index < cellElements.length; index++) {
@@ -89,10 +93,7 @@
         const row = Math.floor(index / cols);
         const col = index % cols;
         const text = cell.dataset.symbol;
-        const isBonusColumn =
-          col === middleColumnA ||
-          col === middleColumnB ||
-          col === middleColumnC;
+        const isBonusColumn = middleColumnLookup[col] === true;
 
         if (row !== winningRow) {
           continue;
@@ -139,12 +140,13 @@
   let gameInstance = null;
 
   if (root && root.document) {
+    const doc = root.document;
     const init = () => {
       gameInstance = createGame();
     };
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", init, { once: true });
+    if (doc.readyState === "loading") {
+      doc.addEventListener("DOMContentLoaded", init, { once: true });
     } else {
       init();
     }
