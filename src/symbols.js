@@ -52,7 +52,7 @@
       name: "Gold Badge",
       value: 8,
       type: "premium",
-      image: "/assets/symbols/gold_badge.png",
+      image: "assets/symbols/gold_badge.png",
       paytable: {}
     },
 
