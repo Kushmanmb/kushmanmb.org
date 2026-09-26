@@ -81,8 +81,16 @@
     const grid = doc.getElementById("slot-grid");
     const statusElement = doc.getElementById("status");
     const spinButton = doc.getElementById("spin-btn");
-    const siren = typeof root.Audio === "function" ? new root.Audio("siren.mp3") : null;
+    const siren = typeof root.Audio === "function" ? new root.Audio("./siren.mp3") : null;
     const middleColumnLookup = Object.create(null);
+
+    if (!grid || !statusElement || !spinButton) {
+      if (statusElement) {
+        statusElement.textContent = "Game failed to load required DOM elements.";
+      }
+
+      return null;
+    }
 
     for (let i = 0; i < BONUS_COLUMNS.middle.length; i++) {
       middleColumnLookup[BONUS_COLUMNS.middle[i]] = true;

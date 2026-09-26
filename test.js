@@ -188,6 +188,23 @@ if (!checkBonusTrigger(testBoard7, customBonusColumns)) {
   failed++;
 }
 
+const testBoard8 = [
+  ["K", "PRISONER", "Q", "J", "MASK"],
+  ["Q", "J", "COP", "BADGE", "Q"],
+  ["J", "K", "Q", "ROBBER", "MASK"],
+  ["MASK", "Q", "J", "K", "BADGE"],
+  ["BADGE", "MASK", "K", "Q", "J"],
+  ["Q", "J", "MASK", "K", "BADGE"]
+];
+
+if (!checkBonusTrigger(testBoard8, customBonusColumns)) {
+  console.log('✓ Test 10: No trigger with custom bonus columns across different rows');
+  passed++;
+} else {
+  console.log('✗ Test 10: FAILED - Should not trigger custom columns across rows');
+  failed++;
+}
+
 console.log(`\n${passed} passed, ${failed} failed\n`);
 
 if (failed > 0) {
