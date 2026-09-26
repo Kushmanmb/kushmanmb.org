@@ -33,11 +33,11 @@ npm test
 
 ## Run the game
 
-Open `/home/runner/work/kushmanmb.org/kushmanmb.org/dist/index.html` in your browser after building.
+Open `dist/index.html` in your browser after building.
 
 ## Project structure
 
-- `/home/runner/work/kushmanmb.org/kushmanmb.org/src` - game source files
-- `/home/runner/work/kushmanmb.org/kushmanmb.org/assets` - symbol assets
-- `/home/runner/work/kushmanmb.org/kushmanmb.org/build.js` - build script
-- `/home/runner/work/kushmanmb.org/kushmanmb.org/test.js` - game logic tests
+- `src/` - game source files
+- `assets/` - symbol assets
+- `build.js` - build script
+- `test.js` - game logic tests
