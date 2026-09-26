@@ -19,7 +19,7 @@
   "license": "UNLICENSED",
   "dependencies": {},
   "devDependencies": {
-    "webpack": "^5.111.0",
+    "webpack": "^5.111.1",
     "webpack-cli": "^7.2.3"
   }
 }
