@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const { execFileSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
@@ -39,7 +40,7 @@ function copyDirectory(source, destination) {
 }
 
 // Copy files
-const filesToCopy = ['index.html', 'style.css', 'siren.mp3', 'symbols.js', 'paylines.js', 'reels.js', 'game.js'];
+const filesToCopy = ['index.html', 'style.css', 'siren.mp3'];
 
 console.log('Building project...');
 
@@ -61,5 +62,11 @@ const wellKnownDistDir = path.join(distDir, '.well-known');
 
 copyDirectory(wellKnownSrcDir, wellKnownDistDir);
 copyDirectory(assetsSourceDir, assetsDistDir);
+
+console.log('Bundling JavaScript with Webpack...');
+execFileSync('npx', ['webpack', '--mode', 'production'], {
+  cwd: __dirname,
+  stdio: 'inherit'
+});
 
 console.log('Build complete! Files are in the dist/ directory.');
