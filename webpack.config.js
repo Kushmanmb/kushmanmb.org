@@ -2,7 +2,6 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    prisoner: './src/prisoner.js',
     symbols: './src/symbols.js',
     paylines: './src/paylines.js',
     reels: './src/reels.js',
